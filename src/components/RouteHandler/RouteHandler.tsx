@@ -26,17 +26,17 @@ export default class RouteHandler extends Component<
     this.state = { isLoggedIn: false, sessionToken: null, userId: null };
   }
 
-  changeLogInState = (val: boolean) => {
-    this.setState({ isLoggedIn: val }, () =>
-      console.log('Trigger login state change -->', this.state.isLoggedIn)
-    );
-  };
-
   updateLocalStorage = (newToken: string, loggedInUser: string) => {
     localStorage.setItem('token', newToken);
     localStorage.setItem('userLoggedIn', loggedInUser);
     this.setState({ sessionToken: newToken });
     this.setState({ userId: loggedInUser });
+  };
+
+  clearSession = () => {
+    localStorage.clear();
+    this.setState({ sessionToken: null });
+    this.setState({ userId: null });
   };
 
   componentDidMount() {
@@ -49,11 +49,9 @@ export default class RouteHandler extends Component<
   render() {
     return (
       <Router>
-        {console.log('Session Token -->', this.state.sessionToken)}
-
         {this.state.sessionToken ? (
           <>
-            <Navigation />
+            <Navigation clearSession={this.clearSession} />
             <Container>
               <Switch>
                 <Route exact path='/'>
@@ -75,10 +73,7 @@ export default class RouteHandler extends Component<
             </Container>
           </>
         ) : (
-          <Auth
-            updateLocalStorage={this.updateLocalStorage}
-            changeLogInState={this.changeLogInState}
-          />
+          <Auth updateLocalStorage={this.updateLocalStorage} />
         )}
       </Router>
     );

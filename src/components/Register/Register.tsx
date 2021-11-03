@@ -4,7 +4,6 @@ import { IRegisterResponse } from './InterfaceRegister';
 import './Register.css';
 
 interface RegisterProps {
-  changeLogInState: Function;
   changeNeedRegistration: Function;
   updateLocalStorage: Function;
 }
@@ -211,12 +210,7 @@ export default class Register extends Component<RegisterProps, RegisterState> {
                 </Row>
               </fieldset>
 
-              <Button
-                variant='warning'
-                type='submit'
-                className='me-2'
-                //onClick={() => this.props.changeLogInState(true)}
-              >
+              <Button variant='warning' type='submit' className='me-2'>
                 Register
               </Button>
 

@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
-import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
+import { Button, Container, Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 
-export default class Navigation extends Component {
+interface NavigationProps {
+  clearSession: Function;
+}
+
+export default class Navigation extends Component<NavigationProps> {
   render() {
     return (
       <div>
@@ -36,7 +40,12 @@ export default class Navigation extends Component {
                     Admin Dashboard
                   </NavDropdown.Item>
                   <NavDropdown.Divider />
-                  <NavDropdown.Item eventKey='6'>Logout</NavDropdown.Item>
+                  <Button
+                    className='d-block mx-auto'
+                    onClick={() => this.props.clearSession()}
+                  >
+                    Logout
+                  </Button>
                 </NavDropdown>
               </Nav>
             </Navbar.Collapse>

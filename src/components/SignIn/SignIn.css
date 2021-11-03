@@ -1,0 +1,11 @@
+.card {
+  max-width: 50rem;
+  width: 100%;
+}
+
+#login-error {
+  display: none;
+  background-color: rgb(122, 32, 32);
+  color: #fff;
+  padding: 1em 1em;
+}

@@ -5,7 +5,6 @@ import SignIn from '../SignIn/SignIn';
 import './Auth.css';
 
 interface AuthProps {
-  changeLogInState: Function;
   updateLocalStorage: Function;
 }
 
@@ -38,13 +37,11 @@ export default class Auth extends Component<AuthProps, AuthState> {
 
         {this.state.needRegistration ? (
           <Register
-            changeLogInState={this.props.changeLogInState}
             changeNeedRegistration={this.changeNeedRegistration}
             updateLocalStorage={this.props.updateLocalStorage}
           />
         ) : (
           <SignIn
-            changeLogInState={this.props.changeLogInState}
             changeNeedRegistration={this.changeNeedRegistration}
             updateLocalStorage={this.props.updateLocalStorage}
           />

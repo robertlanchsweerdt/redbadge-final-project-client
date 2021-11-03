@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Button, Card, Form } from 'react-bootstrap';
 import { ILoginResponse } from './InterfaceSignin';
+import './SignIn.css';
 
 interface SignInProps {
-  changeLogInState: Function;
   changeNeedRegistration: Function;
   updateLocalStorage: Function;
 }
@@ -20,7 +20,6 @@ export default class SignIn extends Component<SignInProps, SignInState> {
 
   handleSubmit = (e: React.FormEvent<EventTarget>): void => {
     e.preventDefault();
-    console.log('handle submit');
 
     const reqBody = {
       username: this.state.username,
@@ -29,8 +28,6 @@ export default class SignIn extends Component<SignInProps, SignInState> {
 
     const url: string = 'http://localhost:4000/user/login';
 
-    console.log(reqBody);
-
     fetch(url, {
       method: 'POST',
       body: JSON.stringify(reqBody),
@@ -38,25 +35,35 @@ export default class SignIn extends Component<SignInProps, SignInState> {
         'Content-type': 'application/json',
       }),
     })
-      .then((res) => res.json())
-      .then((data: ILoginResponse) => {
-        console.log('This is the user id -->', data.user.id);
-        this.props.updateLocalStorage(data.sessionToken, data.user.id);
+      .then((res) => {
+        if (res.status === 401 || !res.ok) {
+          this.setState({ username: '' });
+          this.setState({ password: '' });
+          (
+            document.getElementById('login-error') as HTMLFormElement
+          ).style.display = 'block';
+        } else {
+          res.json().then((data: ILoginResponse) => {
+            this.props.updateLocalStorage(data.sessionToken, data.user.id);
+          });
+        }
       })
       .catch((err) => console.error(err));
   };
 
   render() {
     return (
-      <Card style={{ width: '18rem' }}>
+      <Card>
         <Card.Body>
           <Card.Title>Sign In</Card.Title>
+          <p id='login-error'>Incorrect username or password</p>
           <Form onSubmit={this.handleSubmit}>
             <Form.Group className='mb-3' controlId='formBasicEmail'>
               <Form.Control
                 type='text'
                 placeholder='username'
                 name='username'
+                required
                 value={this.state.username}
                 onChange={(e) => this.setState({ username: e.target.value })}
               />
@@ -67,17 +74,13 @@ export default class SignIn extends Component<SignInProps, SignInState> {
                 type='password'
                 placeholder='password'
                 name='password'
+                required
                 value={this.state.password}
                 onChange={(e) => this.setState({ password: e.target.value })}
               />
             </Form.Group>
 
-            <Button
-              variant='warning'
-              className='me-2'
-              // onClick={() => this.props.changeLogInState(true)}
-              type='submit'
-            >
+            <Button variant='warning' className='me-2' type='submit'>
               Login
             </Button>
             <Button
