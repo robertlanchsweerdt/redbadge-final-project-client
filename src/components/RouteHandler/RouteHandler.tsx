@@ -13,6 +13,8 @@ interface RouteHandlerProps {}
 
 interface RouteHandlerState {
   isLoggedIn: boolean;
+  sessionToken: null | string;
+  userId: null | string;
 }
 
 export default class RouteHandler extends Component<
@@ -21,7 +23,7 @@ export default class RouteHandler extends Component<
 > {
   constructor(props: RouteHandlerProps) {
     super(props);
-    this.state = { isLoggedIn: false };
+    this.state = { isLoggedIn: false, sessionToken: null, userId: null };
   }
 
   changeLogInState = (val: boolean) => {
@@ -30,10 +32,26 @@ export default class RouteHandler extends Component<
     );
   };
 
+  updateLocalStorage = (newToken: string, loggedInUser: string) => {
+    localStorage.setItem('token', newToken);
+    localStorage.setItem('userLoggedIn', loggedInUser);
+    this.setState({ sessionToken: newToken });
+    this.setState({ userId: loggedInUser });
+  };
+
+  componentDidMount() {
+    if (localStorage.getItem('token')) {
+      this.setState({ sessionToken: localStorage.getItem('token') });
+      this.setState({ userId: localStorage.getItem('userLoggedIn') });
+    }
+  }
+
   render() {
     return (
       <Router>
-        {this.state.isLoggedIn ? (
+        {console.log('Session Token -->', this.state.sessionToken)}
+
+        {this.state.sessionToken ? (
           <>
             <Navigation />
             <Container>
@@ -57,7 +75,10 @@ export default class RouteHandler extends Component<
             </Container>
           </>
         ) : (
-          <Auth changeLogInState={this.changeLogInState} />
+          <Auth
+            updateLocalStorage={this.updateLocalStorage}
+            changeLogInState={this.changeLogInState}
+          />
         )}
       </Router>
     );

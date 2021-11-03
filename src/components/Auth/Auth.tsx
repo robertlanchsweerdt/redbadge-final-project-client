@@ -6,6 +6,7 @@ import './Auth.css';
 
 interface AuthProps {
   changeLogInState: Function;
+  updateLocalStorage: Function;
 }
 
 interface AuthState {
@@ -30,6 +31,11 @@ export default class Auth extends Component<AuthProps, AuthState> {
   render() {
     return (
       <div id='wrapper'>
+        <h1 className='text-center px-2'>Bedrock Hills</h1>
+        <h3 className='text-center mb-5 px-2'>
+          Home Owners Association Portal
+        </h3>
+
         {this.state.needRegistration ? (
           <Register
             changeLogInState={this.props.changeLogInState}
@@ -39,9 +45,9 @@ export default class Auth extends Component<AuthProps, AuthState> {
           <SignIn
             changeLogInState={this.props.changeLogInState}
             changeNeedRegistration={this.changeNeedRegistration}
+            updateLocalStorage={this.props.updateLocalStorage}
           />
         )}
-
         <img src={communityImg} alt='overhead view of a neighborhood' />
       </div>
     );
