@@ -4,12 +4,12 @@
         password: string;
         fname: string;
         lname: string;
-        street_number: number;
+        street_number: null | number;
         street_name: string;
         city: string;
         state: string;
         zip: number;
-        tele: string;
+        tele: null | string;
         email: string;
         role: string;
         bio?: any;

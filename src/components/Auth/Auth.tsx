@@ -40,6 +40,7 @@ export default class Auth extends Component<AuthProps, AuthState> {
           <Register
             changeLogInState={this.props.changeLogInState}
             changeNeedRegistration={this.changeNeedRegistration}
+            updateLocalStorage={this.props.updateLocalStorage}
           />
         ) : (
           <SignIn
