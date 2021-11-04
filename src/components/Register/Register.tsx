@@ -21,7 +21,7 @@ interface RegisterState {
   tele: null | string;
   email: string;
   role: string;
-  bio?: any;
+  bio: string;
 }
 
 export default class Register extends Component<RegisterProps, RegisterState> {
@@ -37,45 +37,83 @@ export default class Register extends Component<RegisterProps, RegisterState> {
       city: 'Granger',
       state_: 'Indiana',
       zip: 46530,
-      tele: null,
+      tele: '',
       email: '',
       role: 'subscriber',
-      bio: null,
+      bio: '',
     };
+  }
+
+  passwordNotConfirmed() {
+    const passwordFailMsg = document.getElementById(
+      'password-fail'
+    ) as HTMLFormElement;
+
+    passwordFailMsg.style.display = 'block';
+
+    let passwordFieldValue = (
+      document.getElementsByClassName('password')[0] as HTMLInputElement
+    ).value;
+
+    let usernameField = document.getElementsByClassName(
+      'username'
+    )[0] as HTMLInputElement;
+
+    console.log('username -->', usernameField.value);
+
+    usernameField.value = '';
+
+    console.log('Password value -->', passwordFieldValue);
+
+    passwordFieldValue = '12123234234';
+
+    this.setState({ password_confirm: '' });
+    this.setState({ password: '' });
   }
 
   handleSubmit = (e: React.FormEvent<EventTarget>): void => {
     e.preventDefault();
 
-    const reqBody = {
-      username: this.state.username,
-      password: this.state.password,
-      fname: this.state.fname,
-      lname: this.state.lname,
-      address: this.state.address,
-      city: this.state.city,
-      state: this.state.state_,
-      zip: this.state.zip,
-      tele: this.state.tele,
-      email: this.state.email,
-      role: this.state.role,
-      bio: this.state.bio,
-    };
+    if (this.state.password !== this.state.password_confirm) {
+      console.log('Your password does not match');
+      this.passwordNotConfirmed();
+    } else {
+      const reqBody = {
+        username: this.state.username,
+        password: this.state.password,
+        fname: this.state.fname,
+        lname: this.state.lname,
+        address: this.state.address,
+        city: this.state.city,
+        state: this.state.state_,
+        zip: this.state.zip,
+        tele: this.state.tele,
+        email: this.state.email,
+        role: this.state.role,
+        bio: this.state.bio,
+      };
 
-    const url: string = 'http://localhost:4000/user/register';
+      const url: string = 'http://localhost:4000/user/register';
 
-    fetch(url, {
-      method: 'POST',
-      body: JSON.stringify(reqBody),
-      headers: new Headers({
-        'Content-type': 'application/json',
-      }),
-    })
-      .then((res) => res.json())
-      .then((data: IRegisterResponse) => {
-        this.props.updateLocalStorage(data.sessionToken, data.user.id);
+      fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(reqBody),
+        headers: new Headers({
+          'Content-type': 'application/json',
+        }),
       })
-      .catch((err) => console.error(err));
+        .then((res) => res.json())
+        .then((data: IRegisterResponse) => {
+          const userInfo = {
+            token: data.sessionToken,
+            user: data.user.id,
+            role: data.user.role,
+          };
+
+          this.props.updateLocalStorage(userInfo);
+        })
+        .catch((err) => console.error(err));
+    }
   };
 
   render() {
@@ -173,9 +211,13 @@ export default class Register extends Component<RegisterProps, RegisterState> {
 
               <fieldset>
                 <p className='legend'>Create Login</p>
+                <p id='password-fail'>
+                  Password and Confirm Password does not match
+                </p>
                 <Form.Group controlId='formGridEmail'>
                   <Form.Label>Username</Form.Label>
                   <Form.Control
+                    className='username'
                     type='text'
                     placeholder='ex. jsmith'
                     required
@@ -189,6 +231,7 @@ export default class Register extends Component<RegisterProps, RegisterState> {
                   <Form.Group as={Col} md={6} controlId='formGridPassword'>
                     <Form.Label>Password</Form.Label>
                     <Form.Control
+                      className='password'
                       type='password'
                       required
                       onChange={(e) =>
@@ -200,6 +243,7 @@ export default class Register extends Component<RegisterProps, RegisterState> {
                   <Form.Group as={Col} md={6} controlId='formGridPassword'>
                     <Form.Label>Confirm Password</Form.Label>
                     <Form.Control
+                      className='password-confirm'
                       type='password'
                       required
                       onChange={(e) =>

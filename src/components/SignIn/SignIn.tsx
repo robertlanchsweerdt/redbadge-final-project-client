@@ -44,7 +44,13 @@ export default class SignIn extends Component<SignInProps, SignInState> {
           ).style.display = 'block';
         } else {
           res.json().then((data: ILoginResponse) => {
-            this.props.updateLocalStorage(data.sessionToken, data.user.id);
+            const userInfo = {
+              token: data.sessionToken,
+              user: data.user.id,
+              role: data.user.role,
+            };
+
+            this.props.updateLocalStorage(userInfo);
           });
         }
       })

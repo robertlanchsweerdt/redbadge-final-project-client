@@ -10,7 +10,14 @@ fieldset {
 }
 
 .legend {
-  background-color: brown;
+  background-color: rgb(77, 72, 72);
   color: white;
   padding: 1em 2em;
+}
+
+#password-fail {
+  display: none;
+  background-color: rgb(122, 32, 32);
+  color: #fff;
+  padding: 1em 1em;
 }

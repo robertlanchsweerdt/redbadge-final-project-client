@@ -13,8 +13,15 @@ interface RouteHandlerProps {}
 
 interface RouteHandlerState {
   isLoggedIn: boolean;
-  sessionToken: null | string;
-  userId: null | string;
+  sessionToken: string;
+  userId: string;
+  userRole: string;
+}
+
+interface User {
+  token: string;
+  user: string;
+  role: string;
 }
 
 export default class RouteHandler extends Component<
@@ -23,26 +30,35 @@ export default class RouteHandler extends Component<
 > {
   constructor(props: RouteHandlerProps) {
     super(props);
-    this.state = { isLoggedIn: false, sessionToken: null, userId: null };
+    this.state = {
+      isLoggedIn: false,
+      sessionToken: '',
+      userId: '',
+      userRole: '',
+    };
   }
 
-  updateLocalStorage = (newToken: string, loggedInUser: string) => {
-    localStorage.setItem('token', newToken);
-    localStorage.setItem('userLoggedIn', loggedInUser);
-    this.setState({ sessionToken: newToken });
-    this.setState({ userId: loggedInUser });
+  updateLocalStorage = (userInfo: User) => {
+    localStorage.setItem('user', JSON.stringify(userInfo));
+    this.setState({ sessionToken: userInfo.token });
+    this.setState({ userId: userInfo.user });
+    this.setState({ userRole: userInfo.role });
   };
 
   clearSession = () => {
     localStorage.clear();
-    this.setState({ sessionToken: null });
-    this.setState({ userId: null });
+    this.setState({ sessionToken: '' });
+    this.setState({ userId: '' });
+    this.setState({ userRole: '' });
   };
 
   componentDidMount() {
-    if (localStorage.getItem('token')) {
-      this.setState({ sessionToken: localStorage.getItem('token') });
-      this.setState({ userId: localStorage.getItem('userLoggedIn') });
+    if (localStorage.getItem('user')) {
+      const user: User = JSON.parse(localStorage.getItem('user') || '{}');
+
+      this.setState({ sessionToken: user.token });
+      this.setState({ userId: user.user });
+      this.setState({ userRole: user.role });
     }
   }
 
