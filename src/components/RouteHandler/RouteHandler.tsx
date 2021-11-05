@@ -1,13 +1,20 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
+import Auth from '../Auth/Auth';
 import Navigation from '../Navigation/Navigation';
 import Home from '../Home/Home';
-import Dashboard from '../Dashboard/Dashboard';
+import AdminDashboard from '../AdminDashboard/Menu/AdminDashboard';
 import Posts from '../Posts/Posts';
 import Calendar from '../Calendar/Calendar';
-import PersonalInfo from '../Personal_Info/PersonalInfo';
-import Auth from '../Auth/Auth';
+import ProfileInfo from '../User/UserProfile/UserProfile';
+import UserPosts from '../User/UserPosts/UserComments';
+import UserComments from '../User/UserComments/UserComments';
+import ViewUsers from '../AdminDashboard/ViewUsers/ViewUsers';
+import ViewPosts from '../AdminDashboard/ViewPosts/ViewPosts';
+import ViewComments from '../AdminDashboard/ViewComments/ViewComments';
+import EditCategories from '../AdminDashboard/EditCategories/EditCategories';
+import EditStatus from '../AdminDashboard/Edit Status/EditStatus';
 
 interface RouteHandlerProps {}
 
@@ -67,26 +74,52 @@ export default class RouteHandler extends Component<
       <Router>
         {this.state.sessionToken ? (
           <>
-            <Navigation clearSession={this.clearSession} />
-            <Container>
-              <Switch>
-                <Route exact path='/'>
-                  <Home />
-                </Route>
-                <Route exact path='/posts'>
-                  <Posts />
-                </Route>
-                <Route exact path='/calendar'>
-                  <Calendar />
-                </Route>
-                <Route exact path='/personal-info'>
-                  <PersonalInfo />
-                </Route>
-                <Route exact path='/dashboard'>
-                  <Dashboard />
-                </Route>
-              </Switch>
-            </Container>
+            <Navigation
+              clearSession={this.clearSession}
+              userRole={this.state.userRole}
+            />
+            <main>
+              <Container>
+                <Switch>
+                  <Route exact path='/'>
+                    <Home />
+                  </Route>
+                  <Route exact path='/posts'>
+                    <Posts />
+                  </Route>
+                  <Route exact path='/calendar'>
+                    <Calendar />
+                  </Route>
+                  <Route exact path='/profile'>
+                    <ProfileInfo />
+                  </Route>
+                  <Route exact path='/user-posts'>
+                    <UserPosts />
+                  </Route>
+                  <Route exact path='/user-comments'>
+                    <UserComments />
+                  </Route>
+                  <Route exact path='/dashboard'>
+                    <AdminDashboard />
+                  </Route>
+                  <Route exact path='/registered-users'>
+                    <ViewUsers />
+                  </Route>
+                  <Route exact path='/all-posts'>
+                    <ViewPosts />
+                  </Route>
+                  <Route exact path='/all-comments'>
+                    <ViewComments />
+                  </Route>
+                  <Route exact path='/edit-categories'>
+                    <EditCategories />
+                  </Route>
+                  <Route exact path='/edit-status'>
+                    <EditStatus />
+                  </Route>
+                </Switch>
+              </Container>
+            </main>
           </>
         ) : (
           <Auth updateLocalStorage={this.updateLocalStorage} />

@@ -1,0 +1,26 @@
+/* button {
+  height: 300px;
+  width: 300px;
+} */
+
+.button-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.btn a {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #fff;
+}
+
+.btn a:hover {
+  text-decoration: none;
+}
+
+.btn svg {
+  margin: 0 auto;
+  padding: 1rem 0;
+}

@@ -1,0 +1,20 @@
+footer {
+  background-color: brown;
+  font-size: 0.9rem;
+}
+
+address {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+  color: #fff;
+}
+
+a:hover {
+  text-decoration: underline;
+  color: #fff;
+}

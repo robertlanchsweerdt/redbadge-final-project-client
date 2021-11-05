@@ -4,16 +4,17 @@ import { NavLink } from 'react-router-dom';
 
 interface NavigationProps {
   clearSession: Function;
+  userRole: string;
 }
 
 export default class Navigation extends Component<NavigationProps> {
   render() {
     return (
-      <div>
+      <header>
         <Navbar collapseOnSelect expand='lg' bg='light'>
           <Container>
             <Navbar.Brand as={NavLink} to='/' exact>
-              React-Bootstrap
+              Bedrock Hills HOA
             </Navbar.Brand>
             <Navbar.Toggle aria-controls='responsive-navbar-nav' />
             <Navbar.Collapse id='basic-navbar-nav'>
@@ -29,16 +30,28 @@ export default class Navigation extends Component<NavigationProps> {
                 </Nav.Link>
 
                 <NavDropdown title='Account' id='basic-nav-dropdown'>
+                  <NavDropdown.Item eventKey='4' as={NavLink} to='profile'>
+                    Profile
+                  </NavDropdown.Item>
+
+                  <NavDropdown.Item eventKey='5' as={NavLink} to='user-posts'>
+                    View Your Posts
+                  </NavDropdown.Item>
+
                   <NavDropdown.Item
-                    eventKey='4'
+                    eventKey='6'
                     as={NavLink}
-                    to='personal-info'
+                    to='user-comments'
                   >
-                    Personal Info
+                    View Your Comments
                   </NavDropdown.Item>
-                  <NavDropdown.Item eventKey='5' as={NavLink} to='/dashboard'>
-                    Admin Dashboard
-                  </NavDropdown.Item>
+
+                  {this.props.userRole === 'admin' && (
+                    <NavDropdown.Item eventKey='7' as={NavLink} to='/dashboard'>
+                      Admin Dashboard
+                    </NavDropdown.Item>
+                  )}
+
                   <NavDropdown.Divider />
                   <Button
                     className='d-block mx-auto'
@@ -51,7 +64,7 @@ export default class Navigation extends Component<NavigationProps> {
             </Navbar.Collapse>
           </Container>
         </Navbar>
-      </div>
+      </header>
     );
   }
 }
