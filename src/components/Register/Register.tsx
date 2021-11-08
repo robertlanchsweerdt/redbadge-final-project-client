@@ -102,15 +102,31 @@ export default class Register extends Component<RegisterProps, RegisterState> {
           'Content-type': 'application/json',
         }),
       })
-        .then((res) => res.json())
-        .then((data: IRegisterResponse) => {
-          const userInfo = {
-            token: data.sessionToken,
-            user: data.user.id,
-            role: data.user.role,
-          };
+        .then((res) => {
+          if (res.status === 409) {
+            // username not unique; give error
+            const usernameErrorMsg = document.getElementById(
+              'username-fail'
+            ) as HTMLElement;
 
-          this.props.updateLocalStorage(userInfo);
+            usernameErrorMsg.style.display = 'block';
+
+            const usernameField = document.querySelector(
+              '.username'
+            ) as HTMLFormElement;
+
+            usernameField.style.border = 'solid 2px #792020';
+          } else {
+            // process res because username is unique
+            res.json().then((data: IRegisterResponse) => {
+              const userInfo = {
+                token: data.sessionToken,
+                user: data.user.id,
+                role: data.user.role,
+              };
+              this.props.updateLocalStorage(userInfo);
+            });
+          }
         })
         .catch((err) => console.error(err));
     }
@@ -213,6 +229,9 @@ export default class Register extends Component<RegisterProps, RegisterState> {
                 <p className='legend'>Create Login</p>
                 <p id='password-fail'>
                   Password and Confirm Password does not match
+                </p>
+                <p id='username-fail'>
+                  Username already exists. Choose another.
                 </p>
                 <Form.Group controlId='formGridEmail'>
                   <Form.Label>Username</Form.Label>

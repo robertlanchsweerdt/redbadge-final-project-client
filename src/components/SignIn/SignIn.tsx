@@ -26,7 +26,7 @@ export default class SignIn extends Component<SignInProps, SignInState> {
       password: this.state.password,
     };
 
-    const url: string = 'http://localhost:4000/user/login';
+    const url: string = 'http://localhost:4000/users/login';
 
     fetch(url, {
       method: 'POST',
@@ -40,7 +40,7 @@ export default class SignIn extends Component<SignInProps, SignInState> {
           this.setState({ username: '' });
           this.setState({ password: '' });
           (
-            document.getElementById('login-error') as HTMLFormElement
+            document.getElementById('login-error') as HTMLElement
           ).style.display = 'block';
         } else {
           res.json().then((data: ILoginResponse) => {

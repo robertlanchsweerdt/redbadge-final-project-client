@@ -1,0 +1,12 @@
+.card-img {
+  border: solid 1px red;
+  background-color: black;
+  z-index: 100;
+  width: 100%;
+}
+
+.img-container {
+  width: 300px;
+  height: 300px;
+  overflow: hidden;
+}

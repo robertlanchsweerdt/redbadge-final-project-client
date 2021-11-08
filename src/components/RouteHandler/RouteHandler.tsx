@@ -99,24 +99,28 @@ export default class RouteHandler extends Component<
                   <Route exact path='/user-comments'>
                     <UserComments />
                   </Route>
-                  <Route exact path='/dashboard'>
-                    <AdminDashboard />
-                  </Route>
-                  <Route exact path='/registered-users'>
-                    <ViewUsers />
-                  </Route>
-                  <Route exact path='/all-posts'>
-                    <ViewPosts />
-                  </Route>
-                  <Route exact path='/all-comments'>
-                    <ViewComments />
-                  </Route>
-                  <Route exact path='/edit-categories'>
-                    <EditCategories />
-                  </Route>
-                  <Route exact path='/edit-status'>
-                    <EditStatus />
-                  </Route>
+                  {this.state.userRole === 'admin' && (
+                    <>
+                      <Route exact path='/dashboard' key='/restricted/1'>
+                        <AdminDashboard />
+                      </Route>
+                      <Route exact path='/registered-users' key='/restricted/2'>
+                        <ViewUsers sessionToken={this.state.sessionToken} />
+                      </Route>
+                      <Route exact path='/all-posts' key='/restricted/3'>
+                        <ViewPosts />
+                      </Route>
+                      <Route exact path='/all-comments' key='/restricted/4'>
+                        <ViewComments />
+                      </Route>
+                      <Route exact path='/edit-categories' key='/restricted/5'>
+                        <EditCategories />
+                      </Route>
+                      <Route exact path='/edit-status' key='/restricted/6'>
+                        <EditStatus />
+                      </Route>
+                    </>
+                  )}
                 </Switch>
               </Container>
             </main>

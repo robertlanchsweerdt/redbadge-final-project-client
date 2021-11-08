@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Container, Navbar, Nav, NavDropdown } from 'react-bootstrap';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 interface NavigationProps {
   clearSession: Function;
@@ -57,7 +57,7 @@ export default class Navigation extends Component<NavigationProps> {
                     className='d-block mx-auto'
                     onClick={() => this.props.clearSession()}
                   >
-                    Logout
+                    <Link to='/'>Logout</Link>
                   </Button>
                 </NavDropdown>
               </Nav>

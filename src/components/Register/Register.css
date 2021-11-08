@@ -21,3 +21,10 @@ fieldset {
   color: #fff;
   padding: 1em 1em;
 }
+
+#username-fail {
+  display: none;
+  background-color: #792020;
+  color: #fff;
+  padding: 1em 1em;
+}
