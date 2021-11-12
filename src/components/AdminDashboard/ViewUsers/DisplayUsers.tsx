@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import profileImg from '../../../assets/imgs/profile.png';
-import community from '../../../assets/imgs/community.jpg';
-import { Image } from 'react-bootstrap';
+import { Badge, Button, Card } from 'react-bootstrap';
 import './DisplayUsers.css';
 
 interface DisplayUsersProps {
@@ -22,46 +22,86 @@ interface DisplayUsersProps {
     createdAt: Date;
     updatedAt: Date;
   }>;
+  editUser: string;
+  updateEditUser: Function;
+  sessionToken: string;
 }
 
-export default function DisplayUsers(props: DisplayUsersProps) {
-  return (
-    <div>
-      <h1>Hi</h1>
-      {props.allUsers?.map((data) => {
-        return (
-          <div
-            className='card mb-3'
-            style={{ maxWidth: '540px' }}
-            key={data.id}
-          >
-            <div className='row no-gutters'>
-              <div className='col-md-4 img-container'>
-                <img
-                  src='https://i.guim.co.uk/img/media/fe1e34da640c5c56ed16f76ce6f994fa9343d09d/0_174_3408_2046/master/3408.jpg?width=620&quality=85&auto=format&fit=max&s=56d5de4c5609ca98def0c3382bd569b4'
-                  className='card-img'
-                  alt='profile-img'
-                />
-              </div>
-              <div className='col-md-8'>
-                <div className='card-body'>
-                  <h5 className='card-title'>Card title</h5>
-                  <p className='card-text'>
-                    This is a wider card with supporting text below as a natural
-                    lead-in to additional content. This content is a little bit
-                    longer.
-                  </p>
-                  <p className='card-text'>
-                    <small className='text-muted'>
-                      Last updated 3 mins ago
-                    </small>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        );
-      })}
-    </div>
-  );
+interface DisplayUsersState {
+  rows: number;
+  current_page: number;
+  paginatedData: [];
+}
+
+export default class DisplayUsers extends Component<
+  DisplayUsersProps,
+  DisplayUsersState
+> {
+  constructor(props: DisplayUsersProps) {
+    super(props);
+    this.state = { rows: 4, current_page: 0, paginatedData: [] };
+  }
+
+  pagination() {
+    console.log('loading pagination');
+    this.setState({ current_page: this.state.current_page - 1 });
+    console.log(this.state.current_page, this.state.rows);
+    console.log('Data -->', this.props.allUsers);
+    const pageStart = this.state.current_page * this.state.rows;
+    const pageEnd = pageStart + this.state.rows;
+    const trimmedData = this.props.allUsers.slice(pageStart, pageEnd);
+
+    console.log(trimmedData);
+    return trimmedData;
+  }
+
+  render() {
+    return (
+      <>
+        {this.props.allUsers?.map((data) => {
+          const dateLastUpdate = new Date(data.updatedAt).toLocaleString();
+
+          return (
+            <Card style={{ width: '18rem' }} key={data.id}>
+              <Card.Img variant='top' src={profileImg} />
+              <Card.Body>
+                <Card.Title>
+                  {data.lname}, {data.fname}
+                </Card.Title>
+                <Card.Text>
+                  {data.role === 'admin' ? (
+                    <Badge pill bg='success'>
+                      {data.role}
+                    </Badge>
+                  ) : (
+                    <Badge pill bg='secondary'>
+                      {data.role}
+                    </Badge>
+                  )}
+                  <br />
+                  {data.address}
+                  <br />
+                  {data.city}, {data.state} {data.zip}
+                  {data.tele}
+                  <br />
+                  <a href={`mailto:${data.email}`}>{data.email}</a>
+                </Card.Text>
+                <Button
+                  variant='primary'
+                  className='me-3'
+                  onClick={(e) => this.props.updateEditUser(data.id)}
+                >
+                  <Link to='/edit-user'>Edit</Link>
+                </Button>
+                <Button variant='danger'>Delete</Button>
+                <p className='fst-italic mt-3 mb-0' style={{ fontSize: 12 }}>
+                  Last update: {dateLastUpdate}
+                </p>
+              </Card.Body>
+            </Card>
+          );
+        })}
+      </>
+    );
+  }
 }

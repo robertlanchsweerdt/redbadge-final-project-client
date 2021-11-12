@@ -14,8 +14,13 @@ export default function Footer() {
             P.O. Box 1188
             <br />
             Granger, IN 46530
-            <a href='tel:15745555555'>(574) 555-5555</a>
-            <a href='mailto: robert.lanchsweerdt@gmail.com'>
+            <a href='tel:15745555555' className='footer-link'>
+              (574) 555-5555
+            </a>
+            <a
+              href='mailto: robert.lanchsweerdt@gmail.com'
+              className='footer-link'
+            >
               bedrockhillshoa@email.com
             </a>
           </address>

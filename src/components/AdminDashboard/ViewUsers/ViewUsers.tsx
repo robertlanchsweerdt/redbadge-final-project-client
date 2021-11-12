@@ -3,6 +3,8 @@ import DisplayUsers from './DisplayUsers';
 
 interface ViewUsersProps {
   sessionToken: string;
+  updateEditUser: Function;
+  editUser: string;
 }
 
 interface ViewUsersState {
@@ -53,10 +55,17 @@ export default class ViewUsers extends Component<
 
   render() {
     return (
-      <div>
+      <>
         <h1>Registered Users</h1>
-        <DisplayUsers allUsers={this.state.users} />
-      </div>
+        <div className='displayUsers-wrapper'>
+          <DisplayUsers
+            allUsers={this.state.users}
+            editUser={this.props.editUser}
+            updateEditUser={this.props.updateEditUser}
+            sessionToken={this.props.sessionToken}
+          />
+        </div>
+      </>
     );
   }
 }

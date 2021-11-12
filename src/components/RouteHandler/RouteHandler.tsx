@@ -15,6 +15,7 @@ import ViewPosts from '../AdminDashboard/ViewPosts/ViewPosts';
 import ViewComments from '../AdminDashboard/ViewComments/ViewComments';
 import EditCategories from '../AdminDashboard/EditCategories/EditCategories';
 import EditStatus from '../AdminDashboard/Edit Status/EditStatus';
+import EditUser from '../EditUser/EditUser';
 
 interface RouteHandlerProps {}
 
@@ -23,6 +24,7 @@ interface RouteHandlerState {
   sessionToken: string;
   userId: string;
   userRole: string;
+  editUser: string;
 }
 
 interface User {
@@ -42,6 +44,7 @@ export default class RouteHandler extends Component<
       sessionToken: '',
       userId: '',
       userRole: '',
+      editUser: '',
     };
   }
 
@@ -66,8 +69,13 @@ export default class RouteHandler extends Component<
       this.setState({ sessionToken: user.token });
       this.setState({ userId: user.user });
       this.setState({ userRole: user.role });
+      this.setState({ editUser: '' });
     }
   }
+
+  updateEditUser = (selectedId: string) => {
+    this.setState({ editUser: selectedId });
+  };
 
   render() {
     return (
@@ -99,13 +107,23 @@ export default class RouteHandler extends Component<
                   <Route exact path='/user-comments'>
                     <UserComments />
                   </Route>
+                  <Route exact path='/edit-user'>
+                    <EditUser
+                      editUser={this.state.editUser}
+                      sessionToken={this.state.sessionToken}
+                    />
+                  </Route>
                   {this.state.userRole === 'admin' && (
                     <>
                       <Route exact path='/dashboard' key='/restricted/1'>
                         <AdminDashboard />
                       </Route>
                       <Route exact path='/registered-users' key='/restricted/2'>
-                        <ViewUsers sessionToken={this.state.sessionToken} />
+                        <ViewUsers
+                          sessionToken={this.state.sessionToken}
+                          editUser={this.state.editUser}
+                          updateEditUser={this.updateEditUser}
+                        />
                       </Route>
                       <Route exact path='/all-posts' key='/restricted/3'>
                         <ViewPosts />

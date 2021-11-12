@@ -1,36 +1,35 @@
 import React, { Component } from 'react';
 import { Button, Card, Col, Form, Row } from 'react-bootstrap';
-import { IRegisterResponse } from './InterfaceRegister';
-import './Register.css';
 
-interface RegisterProps {
-  changeNeedRegistration: Function;
-  updateLocalStorage: Function;
+interface DisplaySingleUserProps {
+  data: Object;
 }
 
-interface RegisterState {
+interface DisplaySingleUserState {
   username: string;
   password: string;
-  password_confirm: string;
   fname: string;
   lname: string;
   address: string;
   city: string;
   state_: string;
   zip: number;
-  tele: null | string;
+  tele: string;
   email: string;
   role: string;
   bio: string;
 }
 
-export default class Register extends Component<RegisterProps, RegisterState> {
-  constructor(props: RegisterProps) {
+export default class DisplaySingleUser extends Component<
+  DisplaySingleUserProps,
+  DisplaySingleUserState
+> {
+  constructor(props: DisplaySingleUserProps) {
     super(props);
+
     this.state = {
       username: '',
       password: '',
-      password_confirm: '',
       fname: '',
       lname: '',
       address: '',
@@ -44,87 +43,16 @@ export default class Register extends Component<RegisterProps, RegisterState> {
     };
   }
 
-  passwordNotConfirmed() {
-    const passwordFailMsg = document.getElementById(
-      'password-fail'
-    ) as HTMLFormElement;
-
-    passwordFailMsg.style.display = 'block';
-
-    let usernameField = document.getElementsByClassName(
-      'username'
-    )[0] as HTMLInputElement;
-
-    usernameField.value = '';
-
-    this.setState({ password_confirm: '' });
-    this.setState({ password: '' });
-  }
-
-  handleSubmit = (e: React.FormEvent<EventTarget>): void => {
-    e.preventDefault();
-
-    if (this.state.password !== this.state.password_confirm) {
-      console.log('Your password does not match');
-      this.passwordNotConfirmed();
-    } else {
-      const reqBody = {
-        username: this.state.username,
-        password: this.state.password,
-        fname: this.state.fname,
-        lname: this.state.lname,
-        address: this.state.address,
-        city: this.state.city,
-        state: this.state.state_,
-        zip: this.state.zip,
-        tele: this.state.tele,
-        email: this.state.email,
-        role: this.state.role,
-        bio: this.state.bio,
-      };
-
-      const url: string = 'http://localhost:4000/user/register';
-
-      fetch(url, {
-        method: 'POST',
-        body: JSON.stringify(reqBody),
-        headers: new Headers({
-          'Content-type': 'application/json',
-        }),
-      })
-        .then((res) => {
-          if (res.status === 409) {
-            // username not unique; give error
-            const usernameErrorMsg = document.getElementById(
-              'username-fail'
-            ) as HTMLElement;
-
-            usernameErrorMsg.style.display = 'block';
-
-            const usernameField = document.querySelector(
-              '.username'
-            ) as HTMLFormElement;
-
-            usernameField.style.border = 'solid 2px #792020';
-          } else {
-            // process res because username is unique
-            res.json().then((data: IRegisterResponse) => {
-              const userInfo = {
-                token: data.sessionToken,
-                user: data.user.id,
-                role: data.user.role,
-              };
-              this.props.updateLocalStorage(userInfo);
-            });
-          }
-        })
-        .catch((err) => console.error(err));
-    }
+  onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log('initial state -->', this.state.lname);
+    const key = e.target.name;
+    console.log('key -->', key);
+    this.setState({ [key]: e.target.value } as any);
   };
 
   render() {
     return (
-      <div className='d-flex mx-3'>
+      <div>
         <Card className='mb-3'>
           <Card.Body>
             <Card.Title className='fs-1'>Registration</Card.Title>
@@ -140,7 +68,7 @@ export default class Register extends Component<RegisterProps, RegisterState> {
               Your information is not shared without your consent unless
               required by law.
             </p>
-            <Form onSubmit={this.handleSubmit}>
+            <Form>
               <fieldset>
                 <p className='legend'>Residency Info (required)</p>
 
@@ -149,9 +77,10 @@ export default class Register extends Component<RegisterProps, RegisterState> {
                     <Form.Label>First Name</Form.Label>
                     <Form.Control
                       type='text'
-                      placeholder='ex. John'
+                      name='fname'
+                      value={this.state.fname || ''}
                       required
-                      onChange={(e) => this.setState({ fname: e.target.value })}
+                      onChange={this.onInputChange}
                     />
                   </Form.Group>
 
@@ -159,9 +88,10 @@ export default class Register extends Component<RegisterProps, RegisterState> {
                     <Form.Label>Last Name</Form.Label>
                     <Form.Control
                       type='text'
-                      placeholder='ex. Smith'
+                      name='lname'
+                      value={this.state.lname || ''}
                       required
-                      onChange={(e) => this.setState({ lname: e.target.value })}
+                      onChange={this.onInputChange}
                     />
                   </Form.Group>
                 </Row>
@@ -172,18 +102,13 @@ export default class Register extends Component<RegisterProps, RegisterState> {
                     type='text'
                     placeholder='ex. 16633 Baywood Ln'
                     required
-                    onChange={(e) => this.setState({ address: e.target.value })}
                   />
                 </Form.Group>
 
                 <Row>
                   <Form.Group as={Col} md={6} controlId='formGridAddress1'>
                     <Form.Label>Phone (optional)</Form.Label>
-                    <Form.Control
-                      type='tel'
-                      placeholder='ex. 574-555-5555'
-                      onChange={(e) => this.setState({ tele: e.target.value })}
-                    />
+                    <Form.Control type='tel' placeholder='ex. 574-555-5555' />
                   </Form.Group>
 
                   <Form.Group as={Col} md={6} controlId='formGridAddress1'>
@@ -192,7 +117,6 @@ export default class Register extends Component<RegisterProps, RegisterState> {
                       type='email'
                       placeholder='ex. jsmith@email.com'
                       required
-                      onChange={(e) => this.setState({ email: e.target.value })}
                     />
                   </Form.Group>
                 </Row>
@@ -230,9 +154,6 @@ export default class Register extends Component<RegisterProps, RegisterState> {
                     type='text'
                     placeholder='ex. jsmith'
                     required
-                    onChange={(e) =>
-                      this.setState({ username: e.target.value })
-                    }
                   />
                 </Form.Group>
 
@@ -243,9 +164,6 @@ export default class Register extends Component<RegisterProps, RegisterState> {
                       className='password'
                       type='password'
                       required
-                      onChange={(e) =>
-                        this.setState({ password: e.target.value })
-                      }
                     />
                   </Form.Group>
 
@@ -255,9 +173,6 @@ export default class Register extends Component<RegisterProps, RegisterState> {
                       className='password-confirm'
                       type='password'
                       required
-                      onChange={(e) =>
-                        this.setState({ password_confirm: e.target.value })
-                      }
                     />
                   </Form.Group>
                 </Row>
@@ -267,11 +182,7 @@ export default class Register extends Component<RegisterProps, RegisterState> {
                 Register
               </Button>
 
-              <Button
-                variant='secondary'
-                type='submit'
-                onClick={() => this.props.changeNeedRegistration(false)}
-              >
+              <Button variant='secondary' type='submit'>
                 Return to Login
               </Button>
             </Form>

@@ -9,12 +9,11 @@ address {
   margin: 0;
 }
 
-a {
+.footer-link {
   text-decoration: none;
   color: #fff;
 }
 
-a:hover {
+.footer-link:hover {
   text-decoration: underline;
-  color: #fff;
 }
