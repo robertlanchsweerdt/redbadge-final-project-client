@@ -60,7 +60,6 @@ export default class DisplayUsers extends Component<
       <>
         {this.props.allUsers?.map((data) => {
           const dateLastUpdate = new Date(data.updatedAt).toLocaleString();
-
           return (
             <Card style={{ width: '18rem' }} key={data.id}>
               <Card.Img variant='top' src={profileImg} />

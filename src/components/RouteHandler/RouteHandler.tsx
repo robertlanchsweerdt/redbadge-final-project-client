@@ -16,6 +16,7 @@ import ViewComments from '../AdminDashboard/ViewComments/ViewComments';
 import EditCategories from '../AdminDashboard/EditCategories/EditCategories';
 import EditStatus from '../AdminDashboard/Edit Status/EditStatus';
 import EditUser from '../EditUser/EditUser';
+import CreatePosts from '../Posts/CreatePosts/CreatePosts';
 
 interface RouteHandlerProps {}
 
@@ -93,7 +94,10 @@ export default class RouteHandler extends Component<
                     <Home />
                   </Route>
                   <Route exact path='/posts'>
-                    <Posts />
+                    <Posts sessionToken={this.state.sessionToken} />
+                  </Route>
+                  <Route exact path='/create-post'>
+                    <CreatePosts sessionToken={this.state.sessionToken} />
                   </Route>
                   <Route exact path='/calendar'>
                     <Calendar />

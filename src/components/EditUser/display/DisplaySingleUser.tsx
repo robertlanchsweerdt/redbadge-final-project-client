@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Button, Card, Col, Form, Row } from 'react-bootstrap';
+import { InterfaceEditUser } from '../InterfaceEditUser/InterfaceEditUser';
 
 interface DisplaySingleUserProps {
-  data: Object;
+  data: InterfaceEditUser[];
 }
 
 interface DisplaySingleUserState {
@@ -55,22 +56,13 @@ export default class DisplaySingleUser extends Component<
       <div>
         <Card className='mb-3'>
           <Card.Body>
-            <Card.Title className='fs-1'>Registration</Card.Title>
-            <p className='fw-bold'>
-              Registration restricted to residents of Bedrock Hills.
-            </p>
-            <p className='fst-italic'>
-              Your information will be reviewed by the Home Owners Association
-              to verify your residency with Bedrock Hills, and used should we
-              need to contact you.
-            </p>
-            <p className='fst-italic'>
-              Your information is not shared without your consent unless
-              required by law.
-            </p>
+            <Card.Title className='fs-1'>
+              Edit Subscriber Information
+            </Card.Title>
+
             <Form>
               <fieldset>
-                <p className='legend'>Residency Info (required)</p>
+                <p className='legend'>Residency Info</p>
 
                 <Row>
                   <Form.Group as={Col} md={6} controlId='formGridEmail'>
@@ -140,7 +132,7 @@ export default class DisplaySingleUser extends Component<
               </fieldset>
 
               <fieldset>
-                <p className='legend'>Create Login</p>
+                <p className='legend'>Login Information</p>
                 <p id='password-fail'>
                   Password and Confirm Password does not match
                 </p>

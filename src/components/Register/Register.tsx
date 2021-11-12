@@ -83,7 +83,7 @@ export default class Register extends Component<RegisterProps, RegisterState> {
         bio: this.state.bio,
       };
 
-      const url: string = 'http://localhost:4000/user/register';
+      const url: string = 'http://localhost:4000/users/register';
 
       fetch(url, {
         method: 'POST',

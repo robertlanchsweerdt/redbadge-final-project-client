@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { fetchData } from '../../utils/fetch';
 import DisplaySingleUser from './display/DisplaySingleUser';
+import { InterfaceEditUser } from './InterfaceEditUser/InterfaceEditUser';
 
 interface EditUserProps {
   editUser: string;
@@ -8,13 +9,13 @@ interface EditUserProps {
 }
 
 interface EditUserState {
-  data: Object;
+  data: InterfaceEditUser[];
 }
 
 export default class EditUser extends Component<EditUserProps, EditUserState> {
   constructor(props: EditUserProps) {
     super(props);
-    this.state = { data: {} };
+    this.state = { data: [] };
   }
 
   url: string = `http://localhost:4000/users/${this.props.editUser}`;
@@ -29,7 +30,6 @@ export default class EditUser extends Component<EditUserProps, EditUserState> {
     if (!this.state.data) {
       return <p>No data</p>;
     }
-    console.log(this.state.data);
     return <DisplaySingleUser data={this.state.data} />;
   }
 }
