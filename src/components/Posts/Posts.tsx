@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import { Plus } from 'react-bootstrap-icons';
 import { fetchData } from '../../utils/fetch';
+import DisplayPosts from './DisplayPosts/DisplayPosts';
 
 interface PostsProps {
   sessionToken: string;
@@ -27,8 +28,6 @@ export default class Posts extends Component<PostsProps, PostsState> {
   }
 
   render() {
-    console.log(this.state.data);
-
     return (
       <>
         <h1>Post Board</h1>
@@ -42,7 +41,11 @@ export default class Posts extends Component<PostsProps, PostsState> {
           </Link>
         </Button>
 
-        {!this.state.data ? <p>Show Posts</p> : <p>No Posts to Show</p>}
+        {Object.keys(this.state.data).length > 0 ? (
+          <DisplayPosts sessionToken={this.props.sessionToken} />
+        ) : (
+          <p>No Posts to Show</p>
+        )}
       </>
     );
   }

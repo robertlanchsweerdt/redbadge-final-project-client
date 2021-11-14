@@ -27,34 +27,7 @@ interface DisplayUsersProps {
   sessionToken: string;
 }
 
-interface DisplayUsersState {
-  rows: number;
-  current_page: number;
-  paginatedData: [];
-}
-
-export default class DisplayUsers extends Component<
-  DisplayUsersProps,
-  DisplayUsersState
-> {
-  constructor(props: DisplayUsersProps) {
-    super(props);
-    this.state = { rows: 4, current_page: 0, paginatedData: [] };
-  }
-
-  pagination() {
-    console.log('loading pagination');
-    this.setState({ current_page: this.state.current_page - 1 });
-    console.log(this.state.current_page, this.state.rows);
-    console.log('Data -->', this.props.allUsers);
-    const pageStart = this.state.current_page * this.state.rows;
-    const pageEnd = pageStart + this.state.rows;
-    const trimmedData = this.props.allUsers.slice(pageStart, pageEnd);
-
-    console.log(trimmedData);
-    return trimmedData;
-  }
-
+export default class DisplayUsers extends Component<DisplayUsersProps> {
   render() {
     return (
       <>

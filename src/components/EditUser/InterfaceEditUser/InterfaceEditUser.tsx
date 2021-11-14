@@ -11,7 +11,7 @@ export interface InterfaceEditUser {
   tele: string;
   email: string;
   role: string;
-  bio?: any;
+  bio?: string;
   createdAt: Date;
   updatedAt: Date;
 }

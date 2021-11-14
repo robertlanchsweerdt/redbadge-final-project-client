@@ -52,6 +52,8 @@ export default class DisplaySingleUser extends Component<
   };
 
   render() {
+    console.log(this.props.data);
+
     return (
       <div>
         <Card className='mb-3'>
@@ -90,26 +92,18 @@ export default class DisplaySingleUser extends Component<
 
                 <Form.Group controlId='formGridAddress1'>
                   <Form.Label>Address</Form.Label>
-                  <Form.Control
-                    type='text'
-                    placeholder='ex. 16633 Baywood Ln'
-                    required
-                  />
+                  <Form.Control type='text' required />
                 </Form.Group>
 
                 <Row>
                   <Form.Group as={Col} md={6} controlId='formGridAddress1'>
                     <Form.Label>Phone (optional)</Form.Label>
-                    <Form.Control type='tel' placeholder='ex. 574-555-5555' />
+                    <Form.Control type='tel' />
                   </Form.Group>
 
                   <Form.Group as={Col} md={6} controlId='formGridAddress1'>
                     <Form.Label>Email</Form.Label>
-                    <Form.Control
-                      type='email'
-                      placeholder='ex. jsmith@email.com'
-                      required
-                    />
+                    <Form.Control type='email' required />
                   </Form.Group>
                 </Row>
 
