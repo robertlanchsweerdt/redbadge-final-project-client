@@ -52,7 +52,7 @@ export default class DisplaySingleUser extends Component<
   };
 
   render() {
-    console.log(this.props.data);
+    console.log('from DisplaySingleUser.tsx -->', this.props.data);
 
     return (
       <div>

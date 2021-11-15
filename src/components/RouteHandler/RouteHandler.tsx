@@ -6,17 +6,17 @@ import Navigation from '../Navigation/Navigation';
 import Home from '../Home/Home';
 import AdminDashboard from '../AdminDashboard/Menu/AdminDashboard';
 import Posts from '../Posts/Posts';
-import Calendar from '../Calendar/Calendar';
 import ProfileInfo from '../User/UserProfile/UserProfile';
 import UserPosts from '../User/UserPosts/UserComments';
 import UserComments from '../User/UserComments/UserComments';
 import ViewUsers from '../AdminDashboard/ViewUsers/ViewUsers';
-import ViewPosts from '../AdminDashboard/ViewPosts/ViewPosts';
+import ViewPosts from '../AdminDashboard/ViewComplaints/ViewComplaints';
 import ViewComments from '../AdminDashboard/ViewComments/ViewComments';
 import EditCategories from '../AdminDashboard/EditCategories/EditCategories';
-import EditStatus from '../AdminDashboard/Edit Status/EditStatus';
 import EditUser from '../EditUser/EditUser';
 import CreatePosts from '../Posts/CreatePosts/CreatePosts';
+import CreateCategories from '../AdminDashboard/EditCategories/CreateCategories/CreateCategories';
+import Complaints from '../Complaints/Complaints';
 
 interface RouteHandlerProps {}
 
@@ -93,14 +93,14 @@ export default class RouteHandler extends Component<
                   <Route exact path='/'>
                     <Home />
                   </Route>
+                  <Route exact path='/complaints'>
+                    <Complaints sessionToken={this.state.sessionToken} />
+                  </Route>
                   <Route exact path='/posts'>
                     <Posts sessionToken={this.state.sessionToken} />
                   </Route>
                   <Route exact path='/create-post'>
                     <CreatePosts sessionToken={this.state.sessionToken} />
-                  </Route>
-                  <Route exact path='/calendar'>
-                    <Calendar />
                   </Route>
                   <Route exact path='/profile'>
                     <ProfileInfo />
@@ -136,10 +136,14 @@ export default class RouteHandler extends Component<
                         <ViewComments />
                       </Route>
                       <Route exact path='/edit-categories' key='/restricted/5'>
-                        <EditCategories />
+                        <EditCategories
+                          sessionToken={this.state.sessionToken}
+                        />
                       </Route>
-                      <Route exact path='/edit-status' key='/restricted/6'>
-                        <EditStatus />
+                      <Route exact path='/create-category' key='/restricted/6'>
+                        <CreateCategories
+                          sessionToken={this.state.sessionToken}
+                        />
                       </Route>
                     </>
                   )}

@@ -30,14 +30,14 @@ export default class Posts extends Component<PostsProps, PostsState> {
   render() {
     return (
       <>
-        <h1>Post Board</h1>
+        <h1>Neighborhood News</h1>
         <Button>
           <Link
             to='/create-post'
             className='d-flex flex-row-reverse justify-content-center align-items-center text-decoration-none'
           >
             <Plus color='white' size={30} className='p-0' />
-            Create Post
+            Create a News Post
           </Link>
         </Button>
 

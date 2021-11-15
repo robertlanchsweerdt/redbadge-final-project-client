@@ -1,12 +1,6 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
-import {
-  Chat,
-  Check2Square,
-  People,
-  Stickies,
-  Tags,
-} from 'react-bootstrap-icons';
+import { Chat, People, Stickies, Tags } from 'react-bootstrap-icons';
 import { Link } from 'react-router-dom';
 import './AdminDashboard.css';
 
@@ -25,7 +19,7 @@ export default class AdminDashboard extends Component {
           <Button variant='primary'>
             <Link to='/all-posts'>
               <Stickies color='white' size={95} />
-              View User Posts
+              HOA Complaints
             </Link>
           </Button>{' '}
           <Button variant='primary'>
@@ -38,12 +32,6 @@ export default class AdminDashboard extends Component {
             <Link to='/edit-categories'>
               <Tags color='white' size={95} />
               Edit Categories
-            </Link>
-          </Button>{' '}
-          <Button variant='primary'>
-            <Link to='edit-status'>
-              <Check2Square color='white' size={95} />
-              Edit Status
             </Link>
           </Button>{' '}
         </div>
