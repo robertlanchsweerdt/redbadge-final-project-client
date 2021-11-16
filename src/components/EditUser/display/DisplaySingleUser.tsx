@@ -3,7 +3,7 @@ import { Button, Card, Col, Form, Row } from 'react-bootstrap';
 import { InterfaceEditUser } from '../InterfaceEditUser/InterfaceEditUser';
 
 interface DisplaySingleUserProps {
-  data: InterfaceEditUser[];
+  data: InterfaceEditUser;
 }
 
 interface DisplaySingleUserState {
@@ -18,7 +18,7 @@ interface DisplaySingleUserState {
   tele: string;
   email: string;
   role: string;
-  bio: string;
+  bio: string | undefined;
 }
 
 export default class DisplaySingleUser extends Component<
@@ -29,18 +29,18 @@ export default class DisplaySingleUser extends Component<
     super(props);
 
     this.state = {
-      username: '',
-      password: '',
-      fname: '',
-      lname: '',
-      address: '',
+      username: this.props.data.username,
+      password: this.props.data.password,
+      fname: this.props.data.fname,
+      lname: this.props.data.lname,
+      address: this.props.data.address,
       city: 'Granger',
       state_: 'Indiana',
       zip: 46530,
-      tele: '',
-      email: '',
+      tele: this.props.data.tele,
+      email: this.props.data.email,
       role: 'subscriber',
-      bio: '',
+      bio: this.props.data.bio,
     };
   }
 
@@ -50,6 +50,28 @@ export default class DisplaySingleUser extends Component<
     console.log('key -->', key);
     this.setState({ [key]: e.target.value } as any);
   };
+
+  componentDidUpdate(
+    prevprops: DisplaySingleUserProps,
+    prevstate: DisplaySingleUserState
+  ) {
+    if (prevprops.data !== this.props.data) {
+      this.setState({
+        username: this.props.data.username,
+        password: this.props.data.password,
+        fname: this.props.data.fname,
+        lname: this.props.data.lname,
+        address: this.props.data.address,
+        city: 'Granger',
+        state_: 'Indiana',
+        zip: 46530,
+        tele: this.props.data.tele,
+        email: this.props.data.email,
+        role: 'subscriber',
+        bio: this.props.data.bio,
+      });
+    }
+  }
 
   render() {
     console.log('from DisplaySingleUser.tsx -->', this.props.data);

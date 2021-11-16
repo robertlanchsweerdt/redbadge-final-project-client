@@ -9,13 +9,29 @@ interface EditUserProps {
 }
 
 interface EditUserState {
-  data: InterfaceEditUser[];
+  data: InterfaceEditUser;
 }
 
 export default class EditUser extends Component<EditUserProps, EditUserState> {
   constructor(props: EditUserProps) {
     super(props);
-    this.state = { data: [] };
+    this.state = {
+      data: {
+        id: '',
+        username: '',
+        password: '',
+        fname: '',
+        lname: '',
+        address: '',
+        city: 'Granger',
+        state: 'Indiana',
+        zip: 46530,
+        tele: '',
+        email: '',
+        role: '',
+        bio: '',
+      },
+    };
   }
 
   url: string = `http://localhost:4000/users/${this.props.editUser}`;
