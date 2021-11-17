@@ -8,7 +8,7 @@ export default class Complaints extends Component<ComplaintsProps> {
   render() {
     return (
       <div>
-        <h1>HOA Complaints</h1>
+        <h1>Reported HOA Violations</h1>
       </div>
     );
   }

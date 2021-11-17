@@ -15,7 +15,6 @@ import ViewComments from '../AdminDashboard/ViewComments/ViewComments';
 import EditCategories from '../AdminDashboard/EditCategories/EditCategories';
 import EditUser from '../EditUser/EditUser';
 import CreatePosts from '../Posts/CreatePosts/CreatePosts';
-import CreateCategories from '../AdminDashboard/EditCategories/CreateCategories/CreateCategories';
 import Complaints from '../Complaints/Complaints';
 
 interface RouteHandlerProps {}
@@ -137,11 +136,6 @@ export default class RouteHandler extends Component<
                       </Route>
                       <Route exact path='/edit-categories' key='/restricted/5'>
                         <EditCategories
-                          sessionToken={this.state.sessionToken}
-                        />
-                      </Route>
-                      <Route exact path='/create-category' key='/restricted/6'>
-                        <CreateCategories
                           sessionToken={this.state.sessionToken}
                         />
                       </Route>

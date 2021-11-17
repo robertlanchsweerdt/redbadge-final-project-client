@@ -1,19 +1,21 @@
 import React, { Component } from 'react';
 import { Button, FormControl, InputGroup } from 'react-bootstrap';
-import { fetchData } from '../../../../utils/fetch';
+import { changeData } from '../../../../utils/fetch';
+import MsgAlertBox from '../../../../utils/MsgAlertBox';
+
 import './CreateCategories.css';
 
 // Props:  sessionToken
 interface CreateCategoriesProps {
   sessionToken: string;
+  fetchCategories: Function;
 }
 
 interface CreateCategoriesState {
   category: string;
   validateIntent: boolean;
+  message: string;
 }
-
-const msgBox = document.getElementById('alertMsgBox') as HTMLElement;
 
 export default class CreateCategories extends Component<
   CreateCategoriesProps,
@@ -21,44 +23,41 @@ export default class CreateCategories extends Component<
 > {
   constructor(props: CreateCategoriesProps) {
     super(props);
-    this.state = { category: '', validateIntent: false };
+    this.state = {
+      category: '',
+      validateIntent: false,
+      message: '',
+    };
   }
 
-  // *****************
-  // *****************
-  // *****************
-
-  closeAlert = () => {
-    console.log('trigger close alert');
-
-    if (msgBox != null) {
-      msgBox.style.visibility = 'hidden';
-    }
-
-    // this.msgBox.classList.add('alertMsgBoxHide');
-
-    console.log('div -->', msgBox);
-
-    // if (this.msgBox) {
-    //   this.msgBox.style.display = 'block';
-    // }
-  };
-
-  // *****************
-  // *****************
-  // *****************
-
   verifyAddIntent = () => {
-    console.log('state -->', this.state.category);
-    console.log('are you sure?');
-    this.state.validateIntent && this.addNewCategory();
+    if (this.state.category.length < 1) {
+      this.setState({
+        validateIntent: true,
+        message: 'Category must be at least 3 characters',
+      });
+    } else {
+      this.addNewCategory();
+    }
   };
 
-  addNewCategory = () => {
-    // const url: string = `http://localhost:4000/categories`;
+  closeMsgBox = () => {
+    this.setState({ validateIntent: false });
+  };
 
-    // fetchData(url, 'POST', this.props.sessionToken);
+  addNewCategory = async () => {
+    const inputField = document.getElementById(
+      'category-field'
+    ) as HTMLFormElement;
+
+    const reqBody = { category: this.state.category };
+    const url: string = `http://localhost:4000/categories`;
+
+    await changeData(url, 'POST', reqBody, this.props.sessionToken);
     console.log('post added to database');
+
+    inputField.value = '';
+    this.props.fetchCategories();
   };
 
   render() {
@@ -69,6 +68,7 @@ export default class CreateCategories extends Component<
             aria-label='Example text with button addon'
             aria-describedby='basic-addon1'
             placeholder='Enter new category'
+            id='category-field'
             onChange={(e) => this.setState({ category: e.target.value })}
           />
           <Button
@@ -80,12 +80,11 @@ export default class CreateCategories extends Component<
           </Button>
         </InputGroup>
 
-        <div id='alertMsgBox'>
-          <p className='text-black'>Category field must be completed</p>
-          <Button variant='danger' onClick={this.closeAlert}>
-            Close
-          </Button>
-        </div>
+        <MsgAlertBox
+          msg={this.state.message}
+          validateIntent={this.state.validateIntent}
+          closeMsgBox={this.closeMsgBox}
+        />
       </>
     );
   }

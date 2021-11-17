@@ -52,10 +52,10 @@ export default class DisplaySingleUser extends Component<
   };
 
   componentDidUpdate(
-    prevprops: DisplaySingleUserProps,
-    prevstate: DisplaySingleUserState
+    prevProps: DisplaySingleUserProps,
+    prevState: DisplaySingleUserState
   ) {
-    if (prevprops.data !== this.props.data) {
+    if (prevProps.data !== this.props.data) {
       this.setState({
         username: this.props.data.username,
         password: this.props.data.password,

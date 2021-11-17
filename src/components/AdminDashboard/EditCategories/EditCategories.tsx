@@ -1,13 +1,40 @@
 import React, { Component } from 'react';
+import { fetchData } from '../../../utils/fetch';
 import { Col, Row } from 'react-bootstrap';
 import DisplayCategories from './DisplayCategories/DisplayCategories';
 import CreateCategories from './CreateCategories/CreateCategories';
+import { InterfaceDisplayCategories } from '../EditCategories/DisplayCategories/InterfaceDisplayCategories';
 
 interface EditCategoriesProps {
   sessionToken: string;
 }
 
-export default class EditCategories extends Component<EditCategoriesProps> {
+interface EditCategoriesState {
+  data: InterfaceDisplayCategories[];
+}
+
+export default class EditCategories extends Component<
+  EditCategoriesProps,
+  EditCategoriesState
+> {
+  constructor(props: EditCategoriesProps) {
+    super(props);
+
+    this.state = { data: [] };
+  }
+
+  url: string = `http://localhost:4000/categories`;
+
+  fetchCategories = async () => {
+    this.setState({
+      data: await fetchData(this.url, 'GET', this.props.sessionToken),
+    });
+  };
+
+  componentDidMount() {
+    this.fetchCategories();
+  }
+
   render() {
     return (
       <>
@@ -15,19 +42,19 @@ export default class EditCategories extends Component<EditCategoriesProps> {
 
         <Row>
           <Col md={4}>
-            <CreateCategories sessionToken={this.props.sessionToken} />
+            <CreateCategories
+              sessionToken={this.props.sessionToken}
+              fetchCategories={this.fetchCategories}
+            />
           </Col>
 
           <Col md={8}>
-            <DisplayCategories sessionToken={this.props.sessionToken} />
+            <DisplayCategories
+              sessionToken={this.props.sessionToken}
+              data={this.state.data}
+            />
           </Col>
         </Row>
-
-        {/* {Object.keys(this.state.data).length > 0 ? (
-          <CreateCategories sessionToken={this.props.sessionToken} />
-        ) : (
-          <p>No Posts to Show</p>
-        )} */}
       </>
     );
   }
