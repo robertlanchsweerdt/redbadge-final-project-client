@@ -1,0 +1,12 @@
+td:not(:first-child) {
+  width: 150px;
+  text-align: center;
+}
+
+.cat-submitFunc {
+  display: none;
+}
+
+.disableEditDeleteBtn {
+  display: none;
+}

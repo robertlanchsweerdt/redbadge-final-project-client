@@ -62,8 +62,8 @@ export default class CreateCategories extends Component<
 
   render() {
     return (
-      <>
-        <InputGroup className='mb-3'>
+      <div className='col-md-10'>
+        <InputGroup className='mb-5'>
           <FormControl
             aria-label='Example text with button addon'
             aria-describedby='basic-addon1'
@@ -85,7 +85,7 @@ export default class CreateCategories extends Component<
           validateIntent={this.state.validateIntent}
           closeMsgBox={this.closeMsgBox}
         />
-      </>
+      </div>
     );
   }
 }
