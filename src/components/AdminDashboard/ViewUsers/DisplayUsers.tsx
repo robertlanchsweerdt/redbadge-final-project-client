@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import profileImg from '../../../assets/imgs/profile.png';
 import { Badge, Button, Card } from 'react-bootstrap';
 import './DisplayUsers.css';
+import ConfirmDeleteMessage from '../../EditUser/display/ConfirmDeleteMessage';
+import { IDisplayUsers } from './IDisplayUsers';
+import { changeData } from '../../../utils/fetch';
 
 interface DisplayUsersProps {
   allUsers: Array<{
@@ -25,9 +28,107 @@ interface DisplayUsersProps {
   editUser: string;
   updateEditUser: Function;
   sessionToken: string;
+  fetchUsers: Function;
 }
 
-export default class DisplayUsers extends Component<DisplayUsersProps> {
+interface DisplayUsersState {
+  redirect: string;
+  deleteUser: boolean;
+  show: boolean;
+  modalMessage: string;
+  targetedDeleteUserName: string;
+  targetedUser: IDisplayUsers;
+}
+
+export default class DisplayUsers extends Component<
+  DisplayUsersProps,
+  DisplayUsersState
+> {
+  constructor(props: DisplayUsersProps) {
+    super(props);
+    this.state = {
+      redirect: '',
+      deleteUser: false,
+      show: false,
+      modalMessage: '',
+      targetedDeleteUserName: '',
+      targetedUser: {
+        id: '',
+        username: '',
+        password: '',
+        fname: '',
+        lname: '',
+        address: '',
+        city: 'Granger',
+        state: 'Indiana',
+        zip: 46530,
+        tele: '',
+        email: '',
+        role: 'subscriber',
+        bio: '',
+      },
+    };
+  }
+
+  handleClose = () => this.setState({ show: false });
+
+  confirmMessage = (data: IDisplayUsers) => {
+    this.setState({
+      targetedUser: data,
+      targetedDeleteUserName: `User: ${data.fname} ${data.lname} `,
+      modalMessage: `Are you sure you want to delete this user's account?`,
+      show: true,
+    });
+  };
+
+  confirmDeleteUser = () => this.setState({ show: false, deleteUser: true });
+
+  userDelete = async () => {
+    // confirmation to delete user
+    if (this.state.deleteUser) {
+      // create reqBody
+      const reqBody = {};
+
+      // set url
+      const url: string = `http://localhost:4000/users/${this.state.targetedUser.id}`;
+
+      // connect with API / HTTP REQUEST DELETE
+      await changeData(url, 'DELETE', reqBody, this.props.sessionToken);
+
+      // give confirmation message
+      this.setState({
+        targetedDeleteUserName: `User: ${this.state.targetedUser.fname} ${this.state.targetedUser.lname}`,
+        modalMessage: `This user has been deleted`,
+        show: true,
+      });
+
+      // re-load users from database
+      this.props.fetchUsers();
+    } else {
+      return;
+    }
+  };
+
+  // function name mirrors function name shared with DisplaySingleUser.tsx
+  // which calls the same Modal.  For this component (DisplayUsers.tsx), the
+  // 'redirect' state is not used, but must exist in order for the Modal to
+  // be used by both components.
+
+  redirectPage = () =>
+    this.setState({
+      deleteUser: false,
+      show: false,
+    });
+
+  componentDidUpdate(
+    prevProps: DisplayUsersProps,
+    prevState: DisplayUsersState
+  ) {
+    if (prevState.deleteUser !== this.state.deleteUser) {
+      this.userDelete();
+    }
+  }
+
   render() {
     return (
       <>
@@ -63,9 +164,16 @@ export default class DisplayUsers extends Component<DisplayUsersProps> {
                   className='me-3'
                   onClick={(e) => this.props.updateEditUser(data.id)}
                 >
-                  <Link to='/edit-user'>Edit</Link>
+                  <Link to='/edit-user' className='text-decoration-none'>
+                    Edit
+                  </Link>
                 </Button>
-                <Button variant='danger'>Delete</Button>
+                <Button
+                  variant='danger'
+                  onClick={(e) => this.confirmMessage(data)}
+                >
+                  Delete
+                </Button>
                 <p className='fst-italic mt-3 mb-0' style={{ fontSize: 12 }}>
                   Last update: {dateLastUpdate}
                 </p>
@@ -73,6 +181,16 @@ export default class DisplayUsers extends Component<DisplayUsersProps> {
             </Card>
           );
         })}
+
+        <ConfirmDeleteMessage
+          show={this.state.show}
+          handleClose={this.handleClose}
+          confirmDeleteUser={this.confirmDeleteUser}
+          modalMessage={this.state.modalMessage}
+          targetedDeleteUserName={this.state.targetedDeleteUserName}
+          deleteUser={this.state.deleteUser}
+          redirectPage={this.redirectPage}
+        />
       </>
     );
   }

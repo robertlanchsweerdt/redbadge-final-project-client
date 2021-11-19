@@ -47,6 +47,11 @@ export default class EditUser extends Component<EditUserProps, EditUserState> {
       console.log('from EditUser.tsx -->', this.state.data);
     }
 
-    return <DisplaySingleUser data={this.state.data} />;
+    return (
+      <DisplaySingleUser
+        data={this.state.data}
+        sessionToken={this.props.sessionToken}
+      />
+    );
   }
 }

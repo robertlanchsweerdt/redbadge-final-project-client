@@ -31,7 +31,7 @@ export default class DisplayCategories extends Component<
     };
   }
 
-  // Office hours help with Marco and Chelsey to identify proper Typescript syntax for this event.  Marco and Chelsey could not determine the syntax for the 'parentElement' to not error.  Settled with 'any.'
+  // Office hours help with Marco and Chelsey to identify proper Typescript syntax for this event.  Marco and Chelsey could not determine the syntax for the 'parentElement' to not error.  Lead Instructor Rob also could not determine necessary Typescript syntax.  Approved to use 'any.'
 
   editButton(e: any, category: InterfaceDisplayCategories) {
     this.setState({
@@ -73,7 +73,7 @@ export default class DisplayCategories extends Component<
     const url: string = `http://localhost:4000/categories/${category.id}`;
     console.log('DELETE URL -->', url);
 
-    // connect with API POST
+    // connect with API / HTTP REQUEST DELETE
     await changeData(url, 'DELETE', reqBody, this.props.sessionToken);
 
     // re-render displayed categories
@@ -101,6 +101,8 @@ export default class DisplayCategories extends Component<
     this.cancelButton(e);
   };
 
+  // Office hours help with Marco and Chelsey to identify proper Typescript syntax for this event.  Marco and Chelsey could not determine the syntax for the 'parentElement' to not error.  Lead Instructor Rob also could not determine necessary Typescript syntax.  Approved to use 'any.'
+
   cancelButton(e: any) {
     // setState for editCategory to false
     this.setState({
@@ -124,8 +126,6 @@ export default class DisplayCategories extends Component<
       <div>
         <Table striped bordered hover variant='dark'>
           <tbody>
-            {/* working with Hustin and knew to only use 'any' to get Typescript to allow sort() to run  */}
-
             {this.props.data.length > 0
               ? this.props.data
                   .sort((a: { category: string }, b: { category: string }) => {

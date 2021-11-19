@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { fetchData } from '../../../utils/fetch';
-import { Col, Row } from 'react-bootstrap';
+import { Button, Col, Row } from 'react-bootstrap';
 import DisplayCategories from './DisplayCategories/DisplayCategories';
 import CreateCategories from './CreateCategories/CreateCategories';
 import { InterfaceDisplayCategories } from '../EditCategories/DisplayCategories/InterfaceDisplayCategories';
@@ -39,6 +40,11 @@ export default class EditCategories extends Component<
     return (
       <>
         <h1>Edit Categories</h1>
+        <Button className='mb-5'>
+          <Link to='/dashboard' className='text-decoration-none'>
+            Return to Dashboard
+          </Link>
+        </Button>
 
         <Row>
           <Col md={6}>

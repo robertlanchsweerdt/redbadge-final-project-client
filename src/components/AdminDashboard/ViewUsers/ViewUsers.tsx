@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
+import { fetchData } from '../../../utils/fetch';
 import DisplayUsers from './DisplayUsers';
 
 interface ViewUsersProps {
@@ -36,33 +39,34 @@ export default class ViewUsers extends Component<
     this.state = { users: [] };
   }
 
-  componentDidMount() {
+  fetchUsers = async () => {
     const url: string = 'http://localhost:4000/users/';
 
-    fetch(url, {
-      method: 'GET',
-      headers: new Headers({
-        'Content-type': 'application/json',
-        Authorization: this.props.sessionToken,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        this.setState({ users: data });
-      })
-      .catch((err) => console.error(err));
+    this.setState({
+      users: await fetchData(url, 'GET', this.props.sessionToken),
+    });
+  };
+
+  componentDidMount() {
+    this.fetchUsers();
   }
 
   render() {
     return (
       <>
         <h1>Registered Users</h1>
+        <Button className='mb-5'>
+          <Link to='/dashboard' className='text-decoration-none'>
+            Return to Dashboard
+          </Link>
+        </Button>
         <div className='displayUsers-wrapper'>
           <DisplayUsers
             allUsers={this.state.users}
             editUser={this.props.editUser}
             updateEditUser={this.props.updateEditUser}
             sessionToken={this.props.sessionToken}
+            fetchUsers={this.fetchUsers}
           />
         </div>
       </>

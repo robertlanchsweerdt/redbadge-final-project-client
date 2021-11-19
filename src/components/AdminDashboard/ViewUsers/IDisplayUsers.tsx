@@ -12,6 +12,6 @@ export interface IDisplayUsers {
   email: string;
   role: string;
   bio: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }

@@ -4,7 +4,8 @@ export default class ViewComments extends Component {
   render() {
     return (
       <div>
-        <h1>All User Comments</h1>
+        <h1>View User Comments</h1>
+        <h2>Coming soon..</h2>
       </div>
     );
   }
