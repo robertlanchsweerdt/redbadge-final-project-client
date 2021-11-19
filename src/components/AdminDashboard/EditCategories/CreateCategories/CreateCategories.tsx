@@ -31,7 +31,8 @@ export default class CreateCategories extends Component<
   }
 
   verifyAddIntent = () => {
-    if (this.state.category.length < 1) {
+    console.log(this.state.category.length);
+    if (this.state.category.length < 3) {
       this.setState({
         validateIntent: true,
         message: 'Category must be at least 3 characters',
@@ -60,6 +61,12 @@ export default class CreateCategories extends Component<
     this.props.fetchCategories();
   };
 
+  KeyPress(e: any) {
+    if (e.code === 'Enter') {
+      this.verifyAddIntent();
+    }
+  }
+
   render() {
     return (
       <div className='col-md-10'>
@@ -70,6 +77,7 @@ export default class CreateCategories extends Component<
             placeholder='Enter new category'
             id='category-field'
             onChange={(e) => this.setState({ category: e.target.value })}
+            onKeyPress={this.KeyPress.bind(this)}
           />
           <Button
             variant='success'

@@ -52,6 +52,7 @@ export default class EditCategories extends Component<
             <DisplayCategories
               sessionToken={this.props.sessionToken}
               data={this.state.data}
+              fetchCategories={this.fetchCategories}
             />
           </Col>
         </Row>

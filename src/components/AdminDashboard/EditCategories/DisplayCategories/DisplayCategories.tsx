@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import { Button, Table } from 'react-bootstrap';
 import { InterfaceDisplayCategories } from './InterfaceDisplayCategories';
 import './DisplayCategories.css';
+import { changeData } from '../../../../utils/fetch';
 
 interface EditCategoriesProps {
   sessionToken: string;
   data: InterfaceDisplayCategories[];
+  fetchCategories: Function;
 }
 
 interface EditCategoriesState {
@@ -29,30 +31,92 @@ export default class DisplayCategories extends Component<
     };
   }
 
-  editButton(e: any, category: InterfaceDisplayCategories) {
-    console.log('edit button -->', category);
-    const categoryButtonTableRow = e.target.parentElement
-      ?.parentElement as HTMLElement;
-    console.log(categoryButtonTableRow);
-    console.log('event -->', e.target.value);
+  // Office hours help with Marco and Chelsey to identify proper Typescript syntax for this event.  Marco and Chelsey could not determine the syntax for the 'parentElement' to not error.  Settled with 'any.'
 
+  editButton(e: any, category: InterfaceDisplayCategories) {
     this.setState({
       editCategory: true,
       categoryName: category.category,
       categoryId: category.id,
     });
+
+    // get table row of clicked buttons
+    const tableRow: HTMLElement = e.target.parentElement.parentElement;
+
+    // hide edit and delete buttons
+    tableRow.children[1].classList.add('disableEditDeleteBtn');
+    tableRow.children[2].classList.add('disableEditDeleteBtn');
+
+    // show submit and cancel buttons
+    tableRow.children[3].classList.remove('cat-submitFunc');
+    tableRow.children[4].classList.remove('cat-submitFunc');
   }
 
-  deleteButton() {
-    console.log('delete button');
-  }
+  deleteButton = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    category: InterfaceDisplayCategories
+  ) => {
+    console.log('delete button -->', category.category);
 
-  submitButton() {
-    console.log('submit button');
-  }
+    this.setState({
+      categoryName: category.category,
+      categoryId: category.id,
+    });
 
-  cancelButton() {
-    console.log('cancel button');
+    // create reqBody
+    const reqBody = {
+      categoryId: this.state.categoryId,
+      category: category.category,
+    };
+
+    // set url
+    const url: string = `http://localhost:4000/categories/${category.id}`;
+    console.log('DELETE URL -->', url);
+
+    // connect with API POST
+    await changeData(url, 'DELETE', reqBody, this.props.sessionToken);
+
+    // re-render displayed categories
+    this.props.fetchCategories();
+  };
+
+  // arrow function because need to 'bind' to access this.state
+  submitButton = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    // create reqBody
+    const reqBody = { category: this.state.categoryName };
+
+    // set url
+    const url: string = `http://localhost:4000/categories/${this.state.categoryId}`;
+
+    // connect with API POST
+    await changeData(url, 'PUT', reqBody, this.props.sessionToken);
+
+    // setState for editCategory to false
+    this.setState({ editCategory: false });
+
+    // re-render displayed categories
+    this.props.fetchCategories();
+
+    // display default edit and delete buttons
+    this.cancelButton(e);
+  };
+
+  cancelButton(e: any) {
+    // setState for editCategory to false
+    this.setState({
+      editCategory: false,
+    });
+
+    // get table row of clicked buttons
+    const tableRow = e.target.parentElement.parentElement;
+
+    // show edit and delete buttons
+    tableRow.children[1].classList.remove('disableEditDeleteBtn');
+    tableRow.children[2].classList.remove('disableEditDeleteBtn');
+
+    // hide submit and cancel buttons
+    tableRow.children[3].classList.add('cat-submitFunc');
+    tableRow.children[4].classList.add('cat-submitFunc');
   }
 
   render() {
@@ -64,7 +128,7 @@ export default class DisplayCategories extends Component<
 
             {this.props.data.length > 0
               ? this.props.data
-                  .sort((a: any, b: any) => {
+                  .sort((a: { category: string }, b: { category: string }) => {
                     if (a.category > b.category) {
                       return 1;
                     }
@@ -101,13 +165,16 @@ export default class DisplayCategories extends Component<
                         <Button
                           id='btn-catDelete'
                           variant='danger'
-                          onClick={this.deleteButton}
+                          onClick={(e) => this.deleteButton(e, category)}
                         >
                           Delete
                         </Button>
                       </td>
                       <td className='cat-submitFunc'>
-                        <Button id='btn-catEdit' onClick={this.submitButton}>
+                        <Button
+                          id='btn-catEdit'
+                          onClick={(e) => this.submitButton(e)}
+                        >
                           Submit Edit
                         </Button>
                       </td>
@@ -115,7 +182,7 @@ export default class DisplayCategories extends Component<
                         <Button
                           id='btn-catCancel'
                           variant='danger'
-                          onClick={this.cancelButton}
+                          onClick={(e) => this.cancelButton(e)}
                         >
                           Cancel Edit
                         </Button>
