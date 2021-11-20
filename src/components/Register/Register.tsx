@@ -218,7 +218,7 @@ export default class Register extends Component<RegisterProps, RegisterState> {
               <fieldset>
                 <p className='legend'>Create Login</p>
                 <p id='password-fail'>
-                  Password and Confirm Password does not match
+                  Password and Confirm Password do not match
                 </p>
                 <p id='username-fail'>
                   Username already exists. Choose another.

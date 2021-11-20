@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import profileImg from '../../../assets/imgs/profile.png';
 import { Badge, Button, Card } from 'react-bootstrap';
 import './DisplayUsers.css';
-import ConfirmDeleteMessage from '../../EditUser/display/ConfirmDeleteMessage';
+import ConfirmMessage from '../../../utils/ConfirmMessage';
 import { IDisplayUsers } from './IDisplayUsers';
 import { changeData } from '../../../utils/fetch';
 
@@ -38,6 +38,7 @@ interface DisplayUsersState {
   modalMessage: string;
   targetedDeleteUserName: string;
   targetedUser: IDisplayUsers;
+  generalMessage: boolean;
 }
 
 export default class DisplayUsers extends Component<
@@ -67,6 +68,7 @@ export default class DisplayUsers extends Component<
         role: 'subscriber',
         bio: '',
       },
+      generalMessage: false,
     };
   }
 
@@ -155,6 +157,7 @@ export default class DisplayUsers extends Component<
                   {data.address}
                   <br />
                   {data.city}, {data.state} {data.zip}
+                  <br />
                   {data.tele}
                   <br />
                   <a href={`mailto:${data.email}`}>{data.email}</a>
@@ -182,7 +185,7 @@ export default class DisplayUsers extends Component<
           );
         })}
 
-        <ConfirmDeleteMessage
+        <ConfirmMessage
           show={this.state.show}
           handleClose={this.handleClose}
           confirmDeleteUser={this.confirmDeleteUser}
@@ -190,6 +193,7 @@ export default class DisplayUsers extends Component<
           targetedDeleteUserName={this.state.targetedDeleteUserName}
           deleteUser={this.state.deleteUser}
           redirectPage={this.redirectPage}
+          generalMessage={this.state.generalMessage}
         />
       </>
     );

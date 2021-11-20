@@ -3,7 +3,7 @@ import { Button, Card, Col, Form, Row } from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
 import { changeData } from '../../../utils/fetch';
 import { InterfaceEditUser } from '../InterfaceEditUser/InterfaceEditUser';
-import ConfirmDeleteMessage from './ConfirmDeleteMessage';
+import ConfirmMessage from '../../../utils/ConfirmMessage';
 
 interface DisplaySingleUserProps {
   data: InterfaceEditUser;
@@ -18,7 +18,7 @@ interface DisplaySingleUserState {
   lname: string;
   address: string;
   city: string;
-  state_: string;
+  state: string;
   zip: number;
   tele: string;
   email: string;
@@ -30,6 +30,7 @@ interface DisplaySingleUserState {
   modalMessage: string;
   targetedDeleteUserName: string;
   updatePassword: boolean;
+  generalMessage: boolean;
 }
 
 export default class DisplaySingleUser extends Component<
@@ -41,13 +42,13 @@ export default class DisplaySingleUser extends Component<
 
     this.state = {
       username: this.props.data.username,
-      password: this.props.data.password,
+      password: '',
       confirm_password: '',
       fname: this.props.data.fname,
       lname: this.props.data.lname,
       address: this.props.data.address,
       city: 'Granger',
-      state_: 'Indiana',
+      state: 'Indiana',
       zip: 46530,
       tele: this.props.data.tele,
       email: this.props.data.email,
@@ -59,13 +60,23 @@ export default class DisplaySingleUser extends Component<
       modalMessage: '',
       targetedDeleteUserName: '',
       updatePassword: false,
+      generalMessage: false,
     };
   }
 
-  handleClose = () => this.setState({ show: false });
+  handleClose = () => this.setState({ show: false, generalMessage: false });
   handleShow = () => this.setState({ show: true });
 
-  confirmMessage = () => {
+  confirmUpdateMessage = () => {
+    this.setState({
+      targetedDeleteUserName: `User: ${this.state.fname} ${this.state.lname}`,
+      modalMessage: `This account has been updated`,
+      show: true,
+      generalMessage: true,
+    });
+  };
+
+  confirmDeleteMessage = () => {
     this.setState({
       targetedDeleteUserName: `User: ${this.state.fname} ${this.state.lname}`,
       modalMessage: `Are you sure you want to delete this user's account?`,
@@ -87,6 +98,15 @@ export default class DisplaySingleUser extends Component<
     this.setState({ updatePassword: e.target.checked });
   };
 
+  // function to handle if password and confirm password do not match
+  passwordNotConfirmed() {
+    const passwordFailMsg = document.getElementById(
+      'password-fail'
+    ) as HTMLFormElement;
+
+    passwordFailMsg.style.display = 'block';
+  }
+
   componentDidUpdate(
     prevProps: DisplaySingleUserProps,
     prevState: DisplaySingleUserState
@@ -94,12 +114,12 @@ export default class DisplaySingleUser extends Component<
     if (prevProps.data !== this.props.data) {
       this.setState({
         username: this.props.data.username,
-        password: this.props.data.password,
+        password: '',
         fname: this.props.data.fname,
         lname: this.props.data.lname,
         address: this.props.data.address,
         city: 'Granger',
-        state_: 'Indiana',
+        state: 'Indiana',
         zip: 46530,
         tele: this.props.data.tele,
         email: this.props.data.email,
@@ -118,14 +138,21 @@ export default class DisplaySingleUser extends Component<
     e.preventDefault();
     console.log('update user');
 
-    const reqBody = {
+    // catch if password does not match
+    if (this.state.password !== this.state.confirm_password) {
+      this.passwordNotConfirmed();
+      return;
+    }
+
+    // only runs if password matches
+    let reqBody = {
       username: this.state.username,
       password: this.state.password,
       fname: this.state.fname,
       lname: this.state.lname,
       address: this.state.address,
       city: this.state.city,
-      state: this.state.state_,
+      state: this.state.state,
       zip: this.state.zip,
       tele: this.state.tele,
       email: this.state.email,
@@ -135,9 +162,11 @@ export default class DisplaySingleUser extends Component<
 
     console.log('reqBody -->', reqBody);
 
-    console.log('reqBody removed pw -->', delete reqBody['password']);
+    // if (this.state.updatePassword) {
+    //   const { password, ...rest } = reqBody;
+    // }
 
-    console.log('reqBody update -->', reqBody);
+    console.log('reqBody removed pw -->', reqBody);
 
     const url: string = `http://localhost:4000/users/${this.props.data.id}`;
 
@@ -165,6 +194,7 @@ export default class DisplaySingleUser extends Component<
           usernameField.style.border = 'solid 2px #792020';
         } else {
           console.log('Update success');
+          this.confirmUpdateMessage();
         }
       })
       .catch((err) => console.error(err));
@@ -206,6 +236,11 @@ export default class DisplaySingleUser extends Component<
             <Card.Title className='fs-1'>
               Edit Subscriber Information
             </Card.Title>
+            <Button className='mb-5'>
+              <Link to='/registered-users' className='text-decoration-none'>
+                Return to Registered Users
+              </Link>
+            </Button>
 
             <Form onSubmit={this.userUpdate}>
               <fieldset>
@@ -290,7 +325,7 @@ export default class DisplaySingleUser extends Component<
               <fieldset>
                 <p className='legend'>Login Information</p>
                 <p id='password-fail'>
-                  Password and Confirm Password does not match
+                  Password and Confirm Password do not match
                 </p>
                 <p id='username-fail'>
                   Username already exists. Choose another.
@@ -349,7 +384,7 @@ export default class DisplaySingleUser extends Component<
               <Button
                 variant='danger'
                 className='me-2'
-                onClick={this.confirmMessage}
+                onClick={this.confirmDeleteMessage}
               >
                 Delete
               </Button>
@@ -362,7 +397,7 @@ export default class DisplaySingleUser extends Component<
             </Form>
           </Card.Body>
         </Card>
-        <ConfirmDeleteMessage
+        <ConfirmMessage
           show={this.state.show}
           handleClose={this.handleClose}
           confirmDeleteUser={this.confirmDeleteUser}
@@ -370,6 +405,7 @@ export default class DisplaySingleUser extends Component<
           targetedDeleteUserName={this.state.targetedDeleteUserName}
           deleteUser={this.state.deleteUser}
           redirectPage={this.redirectPage}
+          generalMessage={this.state.generalMessage}
         />
       </div>
     );

@@ -39,12 +39,30 @@ export default class ViewUsers extends Component<
     this.state = { users: [] };
   }
 
+  sortAZ() {
+    this.setState({
+      users: this.state.users.sort(
+        (a: { lname: string }, b: { lname: string }) => {
+          if (a.lname > b.lname) {
+            return 1;
+          }
+          if (a.lname < b.lname) {
+            return -1;
+          }
+          return 0;
+        }
+      ),
+    });
+  }
+
   fetchUsers = async () => {
     const url: string = 'http://localhost:4000/users/';
 
-    this.setState({
+    await this.setState({
       users: await fetchData(url, 'GET', this.props.sessionToken),
     });
+
+    this.sortAZ();
   };
 
   componentDidMount() {

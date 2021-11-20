@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 
-interface ConfirmDeleteMessageProps {
+interface ConfirmMessageProps {
   show: boolean;
   handleClose: Function;
   confirmDeleteUser: Function;
@@ -9,9 +9,10 @@ interface ConfirmDeleteMessageProps {
   targetedDeleteUserName: string;
   deleteUser: boolean;
   redirectPage: Function;
+  generalMessage: boolean;
 }
 
-export default class ConfirmDeleteMessage extends Component<ConfirmDeleteMessageProps> {
+export default class ConfirmMessage extends Component<ConfirmMessageProps> {
   render() {
     return (
       <Modal show={this.props.show} onHide={this.props.handleClose}>
@@ -22,7 +23,7 @@ export default class ConfirmDeleteMessage extends Component<ConfirmDeleteMessage
         </Modal.Header>
         <Modal.Body className='text-dark'>{this.props.modalMessage}</Modal.Body>
         <Modal.Footer>
-          {this.props.deleteUser ? (
+          {this.props.deleteUser || this.props.generalMessage ? (
             <Button variant='primary' onClick={() => this.props.redirectPage()}>
               Close
             </Button>
