@@ -52,7 +52,7 @@ export default class DisplaySingleUser extends Component<
       zip: 46530,
       tele: this.props.data.tele,
       email: this.props.data.email,
-      role: 'subscriber',
+      role: this.props.data.role,
       bio: this.props.data.bio,
       redirect: '',
       deleteUser: false,
@@ -107,6 +107,12 @@ export default class DisplaySingleUser extends Component<
     passwordFailMsg.style.display = 'block';
   }
 
+  // populate user role dropdown
+  populateUserRole() {
+    const defaultOption: any = document.getElementById('defaultRole');
+    defaultOption.textContent = this.props.data.role;
+  }
+
   componentDidUpdate(
     prevProps: DisplaySingleUserProps,
     prevState: DisplaySingleUserState
@@ -123,9 +129,10 @@ export default class DisplaySingleUser extends Component<
         zip: 46530,
         tele: this.props.data.tele,
         email: this.props.data.email,
-        role: 'subscriber',
+        role: this.props.data.role,
         bio: this.props.data.bio,
       });
+      this.populateUserRole();
     }
 
     if (prevState.deleteUser !== this.state.deleteUser) {
@@ -136,7 +143,6 @@ export default class DisplaySingleUser extends Component<
   // update user
   userUpdate = (e: React.FormEvent<EventTarget>): void => {
     e.preventDefault();
-    console.log('update user');
 
     // catch if password does not match
     if (this.state.password !== this.state.confirm_password) {
@@ -236,7 +242,7 @@ export default class DisplaySingleUser extends Component<
             <Card.Title className='fs-1'>
               Edit Subscriber Information
             </Card.Title>
-            <Button className='mb-5'>
+            <Button variant='secondary' className='mb-3'>
               <Link to='/registered-users' className='text-decoration-none'>
                 Return to Registered Users
               </Link>
@@ -323,6 +329,22 @@ export default class DisplaySingleUser extends Component<
               </fieldset>
 
               <fieldset>
+                <p className='legend'>Subscriber Role</p>
+                <Form.Group controlId='formGridRole'>
+                  <select
+                    name='userRole'
+                    id='userRole'
+                    onChange={(e) => this.setState({ role: e.target.value })}
+                  >
+                    <option value='default' id='defaultRole'></option>
+                    <option value='admin'>Administrator</option>
+                    <option value='member'>HOA Member</option>
+                    <option value='subscriber'>Subscriber</option>
+                  </select>
+                </Form.Group>
+              </fieldset>
+
+              <fieldset>
                 <p className='legend'>Login Information</p>
                 <p id='password-fail'>
                   Password and Confirm Password do not match
@@ -330,7 +352,7 @@ export default class DisplaySingleUser extends Component<
                 <p id='username-fail'>
                   Username already exists. Choose another.
                 </p>
-                <Form.Group controlId='formGridEmail'>
+                <Form.Group controlId='formGridUsername'>
                   <Form.Label>Username</Form.Label>
                   <Form.Control
                     className='username'

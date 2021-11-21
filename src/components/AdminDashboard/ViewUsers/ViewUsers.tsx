@@ -73,7 +73,7 @@ export default class ViewUsers extends Component<
     return (
       <>
         <h1>Registered Users</h1>
-        <Button className='mb-5'>
+        <Button variant='secondary' className='mb-5'>
           <Link to='/dashboard' className='text-decoration-none'>
             Return to Dashboard
           </Link>

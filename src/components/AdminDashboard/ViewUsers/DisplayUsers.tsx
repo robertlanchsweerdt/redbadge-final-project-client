@@ -144,12 +144,18 @@ export default class DisplayUsers extends Component<
                   {data.lname}, {data.fname}
                 </Card.Title>
                 <Card.Text>
-                  {data.role === 'admin' ? (
+                  {data.role === 'admin' && (
                     <Badge pill bg='success'>
                       {data.role}
                     </Badge>
-                  ) : (
-                    <Badge pill bg='secondary'>
+                  )}
+                  {data.role === 'member' && (
+                    <Badge pill bg='dark'>
+                      {data.role}
+                    </Badge>
+                  )}
+                  {data.role === 'subscriber' && (
+                    <Badge pill bg='warning'>
                       {data.role}
                     </Badge>
                   )}

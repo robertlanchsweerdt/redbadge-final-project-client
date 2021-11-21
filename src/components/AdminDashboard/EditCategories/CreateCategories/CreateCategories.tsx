@@ -47,6 +47,8 @@ export default class CreateCategories extends Component<
   };
 
   addNewCategory = async () => {
+    console.log('add category');
+
     const inputField = document.getElementById(
       'category-field'
     ) as HTMLFormElement;

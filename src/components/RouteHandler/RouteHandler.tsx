@@ -5,7 +5,7 @@ import Auth from '../Auth/Auth';
 import Navigation from '../Navigation/Navigation';
 import Home from '../Home/Home';
 import AdminDashboard from '../AdminDashboard/Menu/AdminDashboard';
-import Posts from '../Posts/Posts';
+import News from '../News/News';
 import ProfileInfo from '../User/UserProfile/UserProfile';
 import UserPosts from '../User/UserPosts/UserComments';
 import UserComments from '../User/UserComments/UserComments';
@@ -14,7 +14,7 @@ import ViewPosts from '../AdminDashboard/ViewComplaints/ViewComplaints';
 import ViewComments from '../AdminDashboard/ViewComments/ViewComments';
 import EditCategories from '../AdminDashboard/EditCategories/EditCategories';
 import EditUser from '../EditUser/EditUser';
-import CreatePosts from '../Posts/CreatePosts/CreatePosts';
+import CreateNews from '../News/CreateNews/CreateNews';
 import Complaints from '../Complaints/Complaints';
 
 interface RouteHandlerProps {}
@@ -95,11 +95,15 @@ export default class RouteHandler extends Component<
                   <Route exact path='/complaints'>
                     <Complaints sessionToken={this.state.sessionToken} />
                   </Route>
-                  <Route exact path='/posts'>
-                    <Posts sessionToken={this.state.sessionToken} />
+                  <Route exact path='/neighborhood-news'>
+                    <News
+                      sessionToken={this.state.sessionToken}
+                      userId={this.state.userId}
+                      userRole={this.state.userRole}
+                    />
                   </Route>
                   <Route exact path='/create-post'>
-                    <CreatePosts sessionToken={this.state.sessionToken} />
+                    <CreateNews sessionToken={this.state.sessionToken} />
                   </Route>
                   <Route exact path='/profile'>
                     <ProfileInfo />

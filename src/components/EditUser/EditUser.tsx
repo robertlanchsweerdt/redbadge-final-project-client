@@ -43,10 +43,6 @@ export default class EditUser extends Component<EditUserProps, EditUserState> {
   }
 
   render() {
-    if (Object.keys(this.state.data).length > 0) {
-      console.log('from EditUser.tsx -->', this.state.data);
-    }
-
     return (
       <DisplaySingleUser
         data={this.state.data}

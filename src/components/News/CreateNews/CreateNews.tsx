@@ -2,22 +2,16 @@ import React, { Component } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 
 // Props:  sessionToken
-interface CreatePostsProps {
+interface CreateNewsProps {
   sessionToken: string;
 }
 
 // State: title, category, status, has_address, address, city, state, zip, narrative, cal_date, photos
-interface CreatePostsState {
+interface CreateNewsState {
   title: string;
-  category: string;
-  status: string;
-  has_address: boolean;
-  address: string;
-  city: string;
-  state_: string;
-  zip: number;
   narrative: string;
-  cal_date: string;
+  cal_date?: Date | string;
+  photos?: Object;
 }
 
 // Form to intake data
@@ -26,23 +20,17 @@ interface CreatePostsState {
 
 // submitHandler to POST API
 
-export default class CreatePosts extends Component<
-  CreatePostsProps,
-  CreatePostsState
+export default class CreateNews extends Component<
+  CreateNewsProps,
+  CreateNewsState
 > {
-  constructor(props: CreatePostsProps) {
+  constructor(props: CreateNewsProps) {
     super(props);
     this.state = {
       title: '',
-      category: '',
-      status: '',
-      has_address: false,
-      address: '',
-      city: 'Granger',
-      state_: 'Indiana',
-      zip: 46530,
       narrative: '',
       cal_date: '',
+      photos: {},
     };
   }
 
@@ -59,15 +47,9 @@ export default class CreatePosts extends Component<
 
     const reqBody = {
       title: this.state.title,
-      category: this.state.category,
-      status: this.state.status,
-      has_address: this.state.has_address,
-      address: this.state.address,
-      city: 'Granger',
-      state_: 'Indiana',
-      zip: 46530,
       narrative: this.state.narrative,
       cal_date: this.state.cal_date,
+      photos: this.state.photos,
     };
 
     const url: string = 'http://localhost:4000/posts';

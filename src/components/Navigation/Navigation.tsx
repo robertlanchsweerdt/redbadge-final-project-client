@@ -22,7 +22,7 @@ export default class Navigation extends Component<NavigationProps> {
                 <Nav.Link eventKey='1' as={NavLink} to='/complaints'>
                   HOA Complaints
                 </Nav.Link>
-                <Nav.Link eventKey='2' as={NavLink} to='/posts'>
+                <Nav.Link eventKey='2' as={NavLink} to='/neighborhood-news'>
                   Neighborhood News
                 </Nav.Link>
                 <NavDropdown title='Account' id='basic-nav-dropdown'>
