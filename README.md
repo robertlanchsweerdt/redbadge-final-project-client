@@ -1,46 +1,71 @@
-# Getting Started with Create React App
+# Red Badge Final Project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Purpose
 
-## Available Scripts
+[Eleven Fifty Academy](https://elevenfifty.org/) requires students to build a web application version 1.0 to graduate. The project will use PostgreSQL, ExpressJS, ReactJS, and NodeJS (also known as the PERN stack). In addition, ReactJS must use Typescript.
 
-In the project directory, you can run:
+## Instructions
 
-### `npm start`
+The student is responsible for coming up with an idea for the application, designing and building the application, and then deploying the client and server to Heroku. During each day of class, the instructor will simulate being a Scrum Master during Agile meeting to assess the developer's (student's) progress.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The student was given 25 business days to build the application. The application was version 1.0.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Requirements
 
-### `npm test`
+- Front-end is built with React **legacy** to include Class components, lifecycle methods, state management, etc.
+- Include a styling library such as Material UI, Bootstrap, etc.
+- Data persistence using PostgreSQL and a NodeJS ORM library (Sequelize)
+- Use DB associations
+- Minimum of two (2) application components use full CRUD
+- MVP components
+- User registration and authenication (REST-ful API)
+- Role based access control
+- Strong typing with Typescript
+- Diligent use of Git for version control
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Explaining My Application
 
-### `npm run build`
+The application is designed for home owners belonging to a Home Owners Association (HOA), who want a secure web application to share information about their neighborhood.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+From there the app has two (2) groups to server: HOA managemet and the neighborhood.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+For the neighborhood, the application gives them a portal to submit HOA violations to mgmt, neighborhood transparency about reported violations and their outcomes, and neighbors can publish news relevant to neighborhood events and activity.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+For HOA management, the application gives them a tool to better manage violations. The app gives them a dashboard to: (1) screen reported violations before publishing; (2) access to subscriber information; (3) three tiers for role permissions; (4) CRUD categories for violations; and (5) monitor status of violations.
 
-### `npm run eject`
+## Version 1.0
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+The current version of the application, which has been presented for graduation, offers the following features:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Administrator Dashboard
+- Login and registration
+- Role permissions with different levels of accessibility
+- CRUD for Neighborhood News
+- CRUD for categories related to HOA violations
+- CRUD for admin to manage users
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Version 2.0 Goal
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Version 2.0 has an unspecified complete date.
 
-## Learn More
+- User can create, update or delete their own entry
+- Add CRUD for HOA Violations
+- Add CRUD comments to Neighborhood News
+- Add CRUD notes to HOA Reported Violations
+- Add search and sort capability for various app components
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Version 3.0 Goal
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Version 3.0 has an unspecified complete date.
+
+- Street address validation / auto complete
+- Map to display each address in database
+- Upload images
+- Calendar to display events
+- Profile image for user
+
+## Version 4.0 Goal
+
+Version 4.0 has an unspecified complete date.
+
+Scale the app to be used by a multitude of neighborhoods where a user registers for a particular neighborhood / city / state and is granted access by the admin.

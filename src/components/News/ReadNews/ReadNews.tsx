@@ -104,31 +104,31 @@ export default class ReadNews extends Component<ReadNewsProps, ReadNewsState> {
             )}
 
             <hr />
+
+            {/* hide Return button if editing */}
+            {!this.state.editNews && (
+              <Button variant='secondary'>
+                <Link to='/neighborhood-news' className='text-decoration-none'>
+                  Return to Neighborhood News
+                </Link>
+              </Button>
+            )}
+
             {/* below buttons only available based on role */}
 
             {(this.props.userId === this.state.data.userId ||
               this.props.userRole === 'admin') && (
               <>
-                {/* show (2) buttons if NOT editing  */}
+                {/* only show edit button if NOT editing  */}
 
                 {!this.state.editNews && (
-                  <>
-                    <Button variant='secondary'>
-                      <Link
-                        to='/neighborhood-news'
-                        className='text-decoration-none'
-                      >
-                        Return to Neighborhood News
-                      </Link>
-                    </Button>
-                    <Button
-                      variant='warning'
-                      className='ms-3'
-                      onClick={() => this.setState({ editNews: true })}
-                    >
-                      Edit
-                    </Button>
-                  </>
+                  <Button
+                    variant='warning'
+                    className='ms-3'
+                    onClick={() => this.setState({ editNews: true })}
+                  >
+                    Edit
+                  </Button>
                 )}
 
                 {/* show (2) button if YES editing */}

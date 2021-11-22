@@ -1,0 +1,36 @@
+#homePage {
+  position: relative;
+  width: 100%;
+  min-height: 70vh;
+}
+
+#homePage img::before {
+  position: absolute;
+  content: '';
+  top: 0;
+  left: 0;
+
+  height: 100%;
+  width: 100%;
+}
+
+.homePage-copy {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+  text-align: center;
+  font-family: 'Dancing Script';
+  width: 100%;
+}
+
+.homePage-copy h1 {
+  font-size: clamp(3rem, 7vw, 15rem);
+}
+.homePage-copy h2 {
+  font-size: clamp(2rem, 5vw, 13rem);
+}
+.homePage-copy h3 {
+  font-size: clamp(1.5rem, 3vw, 10rem);
+}
