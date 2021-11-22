@@ -166,8 +166,12 @@ export default class DisplaySingleUser extends Component<
       bio: this.state.bio,
     };
 
-    console.log('reqBody -->', reqBody);
+    // remove password key from reqBody Object if admin doesn't want to change password
+    if (!this.state.updatePassword) {
+      delete reqBody['password'];
+    }
 
+    // temporary work around if necessary
     // if (this.state.updatePassword) {
     //   const { password, ...rest } = reqBody;
     // }
