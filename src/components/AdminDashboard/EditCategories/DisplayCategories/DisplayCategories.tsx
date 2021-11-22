@@ -124,74 +124,76 @@ export default class DisplayCategories extends Component<
   render() {
     return (
       <div>
-        <Table striped bordered hover variant='dark'>
-          <tbody>
-            {this.props.data.length > 0
-              ? this.props.data
-                  .sort((a: { category: string }, b: { category: string }) => {
-                    if (a.category > b.category) {
-                      return 1;
-                    }
-                    if (b.category < a.category) {
-                      return -1;
-                    }
-                    return 0;
-                  })
-                  .map((category) => (
-                    <tr key={category.id}>
-                      <td>
-                        {this.state.editCategory &&
-                        category.id === this.state.categoryId ? (
-                          <input
-                            type='text'
-                            value={this.state.categoryName || ''}
-                            onChange={(e) =>
-                              this.setState({ categoryName: e.target.value })
-                            }
-                          />
-                        ) : (
-                          category.category
-                        )}
-                      </td>
-                      <td>
-                        <Button
-                          id='btn-catEdit'
-                          onClick={(e) => this.editButton(e, category)}
-                        >
-                          Edit
-                        </Button>
-                      </td>
-                      <td>
-                        <Button
-                          id='btn-catDelete'
-                          variant='danger'
-                          onClick={(e) => this.deleteButton(e, category)}
-                        >
-                          Delete
-                        </Button>
-                      </td>
-                      <td className='cat-submitFunc'>
-                        <Button
-                          id='btn-catEdit'
-                          onClick={(e) => this.submitButton(e)}
-                        >
-                          Submit Edit
-                        </Button>
-                      </td>
-                      <td className='cat-submitFunc'>
-                        <Button
-                          id='btn-catCancel'
-                          variant='danger'
-                          onClick={(e) => this.cancelButton(e)}
-                        >
-                          Cancel Edit
-                        </Button>
-                      </td>
-                    </tr>
-                  ))
-              : null}
-          </tbody>
-        </Table>
+        {this.props.data.length > 0 ? (
+          <Table striped bordered hover variant='dark'>
+            <tbody>
+              {this.props.data
+                .sort((a: { category: string }, b: { category: string }) => {
+                  if (a.category > b.category) {
+                    return 1;
+                  }
+                  if (b.category < a.category) {
+                    return -1;
+                  }
+                  return 0;
+                })
+                .map((category) => (
+                  <tr key={category.id}>
+                    <td>
+                      {this.state.editCategory &&
+                      category.id === this.state.categoryId ? (
+                        <input
+                          type='text'
+                          value={this.state.categoryName || ''}
+                          onChange={(e) =>
+                            this.setState({ categoryName: e.target.value })
+                          }
+                        />
+                      ) : (
+                        category.category
+                      )}
+                    </td>
+                    <td>
+                      <Button
+                        id='btn-catEdit'
+                        onClick={(e) => this.editButton(e, category)}
+                      >
+                        Edit
+                      </Button>
+                    </td>
+                    <td>
+                      <Button
+                        id='btn-catDelete'
+                        variant='danger'
+                        onClick={(e) => this.deleteButton(e, category)}
+                      >
+                        Delete
+                      </Button>
+                    </td>
+                    <td className='cat-submitFunc'>
+                      <Button
+                        id='btn-catEdit'
+                        onClick={(e) => this.submitButton(e)}
+                      >
+                        Submit Edit
+                      </Button>
+                    </td>
+                    <td className='cat-submitFunc'>
+                      <Button
+                        id='btn-catCancel'
+                        variant='danger'
+                        onClick={(e) => this.cancelButton(e)}
+                      >
+                        Cancel Edit
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </Table>
+        ) : (
+          <p>You have no categories to display</p>
+        )}
       </div>
     );
   }

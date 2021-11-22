@@ -71,7 +71,7 @@ export default class CreateCategories extends Component<
 
   render() {
     return (
-      <div className='col-md-10'>
+      <div className='col-lg-10'>
         <InputGroup className='mb-5'>
           <FormControl
             aria-label='Example text with button addon'

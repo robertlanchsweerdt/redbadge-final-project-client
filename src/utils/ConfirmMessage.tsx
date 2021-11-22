@@ -4,19 +4,19 @@ import { Button, Modal } from 'react-bootstrap';
 interface ConfirmMessageProps {
   show: boolean;
   handleClose: Function;
-  confirmDeleteUser: Function;
+  confirmDeleteUser?: Function;
   modalMessage: string;
-  targetedDeleteUserName: string;
-  deleteUser: boolean;
-  redirectPage: Function;
-  generalMessage: boolean;
+  targetedDeleteUserName?: string;
+  deleteUser?: boolean;
+  redirectPage?: Function;
+  generalMessage?: boolean;
 }
 
 export default class ConfirmMessage extends Component<ConfirmMessageProps> {
   render() {
     return (
       <Modal show={this.props.show} onHide={this.props.handleClose}>
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title className='text-dark'>
             {this.props.targetedDeleteUserName}
           </Modal.Title>
@@ -24,14 +24,25 @@ export default class ConfirmMessage extends Component<ConfirmMessageProps> {
         <Modal.Body className='text-dark'>{this.props.modalMessage}</Modal.Body>
         <Modal.Footer>
           {this.props.deleteUser || this.props.generalMessage ? (
-            <Button variant='primary' onClick={() => this.props.redirectPage()}>
+            <Button
+              variant='primary'
+              onClick={() => {
+                if (this.props.redirectPage) {
+                  this.props.redirectPage();
+                }
+              }}
+            >
               Close
             </Button>
           ) : (
             <>
               <Button
                 variant='danger'
-                onClick={() => this.props.confirmDeleteUser()}
+                onClick={() => {
+                  if (this.props.confirmDeleteUser) {
+                    this.props.confirmDeleteUser();
+                  }
+                }}
               >
                 Confirm
               </Button>

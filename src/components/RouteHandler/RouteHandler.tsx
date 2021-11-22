@@ -16,6 +16,7 @@ import EditCategories from '../AdminDashboard/EditCategories/EditCategories';
 import EditUser from '../EditUser/EditUser';
 import CreateNews from '../News/CreateNews/CreateNews';
 import Complaints from '../Complaints/Complaints';
+import ReadNews from '../News/ReadNews/ReadNews';
 
 interface RouteHandlerProps {}
 
@@ -25,6 +26,7 @@ interface RouteHandlerState {
   userId: string;
   userRole: string;
   editUser: string;
+  readNewsArticle: number;
 }
 
 interface User {
@@ -45,6 +47,7 @@ export default class RouteHandler extends Component<
       userId: '',
       userRole: '',
       editUser: '',
+      readNewsArticle: 0,
     };
   }
 
@@ -62,6 +65,14 @@ export default class RouteHandler extends Component<
     this.setState({ userRole: '' });
   };
 
+  updateEditUser = (selectedId: string) => {
+    this.setState({ editUser: selectedId });
+  };
+
+  updateReadNewsArticle = (newsId: number) => {
+    this.setState({ readNewsArticle: newsId });
+  };
+
   componentDidMount() {
     if (localStorage.getItem('user')) {
       const user: User = JSON.parse(localStorage.getItem('user') || '{}');
@@ -72,10 +83,6 @@ export default class RouteHandler extends Component<
       this.setState({ editUser: '' });
     }
   }
-
-  updateEditUser = (selectedId: string) => {
-    this.setState({ editUser: selectedId });
-  };
 
   render() {
     return (
@@ -100,10 +107,22 @@ export default class RouteHandler extends Component<
                       sessionToken={this.state.sessionToken}
                       userId={this.state.userId}
                       userRole={this.state.userRole}
+                      updateReadNewsArticle={this.updateReadNewsArticle}
                     />
                   </Route>
-                  <Route exact path='/create-post'>
-                    <CreateNews sessionToken={this.state.sessionToken} />
+                  <Route exact path='/create-news'>
+                    <CreateNews
+                      sessionToken={this.state.sessionToken}
+                      userRole={this.state.userRole}
+                    />
+                  </Route>
+                  <Route exact path='/read-news'>
+                    <ReadNews
+                      sessionToken={this.state.sessionToken}
+                      newsId={this.state.readNewsArticle}
+                      userId={this.state.userId}
+                      userRole={this.state.userRole}
+                    />
                   </Route>
                   <Route exact path='/profile'>
                     <ProfileInfo />

@@ -155,7 +155,7 @@ export default class DisplayUsers extends Component<
                     </Badge>
                   )}
                   {data.role === 'subscriber' && (
-                    <Badge pill bg='warning'>
+                    <Badge pill bg='warning' className='text-dark'>
                       {data.role}
                     </Badge>
                   )}

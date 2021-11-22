@@ -1,24 +1,24 @@
 import React, { Component } from 'react';
+import { Link, Redirect } from 'react-router-dom';
 import { Button, Col, Form, Row } from 'react-bootstrap';
+import { changeData } from '../../../utils/fetch';
+import ConfirmMessage from '../../../utils/ConfirmMessage';
 
 // Props:  sessionToken
 interface CreateNewsProps {
   sessionToken: string;
+  userRole: string;
 }
 
-// State: title, category, status, has_address, address, city, state, zip, narrative, cal_date, photos
+// State: title, narrative
 interface CreateNewsState {
   title: string;
   narrative: string;
-  cal_date?: Date | string;
-  photos?: Object;
+  redirect: string;
+  show: boolean;
+  modalMessage: string;
+  generalMessage: boolean;
 }
-
-// Form to intake data
-
-// Submit button to submitHandler
-
-// submitHandler to POST API
 
 export default class CreateNews extends Component<
   CreateNewsProps,
@@ -29,127 +29,93 @@ export default class CreateNews extends Component<
     this.state = {
       title: '',
       narrative: '',
-      cal_date: '',
-      photos: {},
+      redirect: '',
+      show: false,
+      modalMessage: '',
+      generalMessage: false,
     };
   }
 
+  // handles modal message box
+  handleClose = () => this.setState({ show: false, generalMessage: false });
+  handleShow = () => this.setState({ show: true });
+
+  // handles confirm message that news was updated
+  confirmUpdateMessage = () => {
+    this.setState({
+      modalMessage: 'Your news post has been published',
+      show: true,
+      generalMessage: true,
+    });
+  };
+
+  // redirects user to a specific page
+  redirectPage = () => this.setState({ redirect: '/neighborhood-news' });
+
+  // handles the state changes
   onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log('change detected');
     console.log(e.target.name);
-    console.log('Date-->', this.state.cal_date);
     this.setState({ [e.target.name]: e.target.value } as any);
   };
 
+  // submitHandler to POST API
   handleSubmit = (e: React.FormEvent<EventTarget>): void => {
     e.preventDefault();
+
+    // circuit breaker if nothing entered in the fields and user tries to submit
+    if (this.state.title.length < 1 || this.state.narrative.length < 1) return;
+
+    // process POST request if passes circuit breaker
     console.log('your post submitted');
 
     const reqBody = {
       title: this.state.title,
       narrative: this.state.narrative,
-      cal_date: this.state.cal_date,
-      photos: this.state.photos,
     };
 
-    const url: string = 'http://localhost:4000/posts';
+    const url: string = 'http://localhost:4000/news';
 
-    fetch(url, {
-      method: 'POST',
-      body: JSON.stringify(reqBody),
-      headers: new Headers({
-        'Content-type': 'application/json',
-        Authorization: this.props.sessionToken,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => console.log(data))
-      .catch((err) => console.error(err));
+    changeData(url, 'POST', reqBody, this.props.sessionToken);
+    this.confirmUpdateMessage();
   };
 
   render() {
+    if (this.state.redirect) {
+      return <Redirect to={this.state.redirect} />;
+    }
+
     return (
       <div>
-        <h1>Create Post</h1>
+        <h1>Create News Post</h1>
+        <Button variant='secondary mb-4'>
+          <Link to='/neighborhood-news' className='text-decoration-none'>
+            Return to Neighborhood News
+          </Link>
+        </Button>
+
         <Form onSubmit={this.handleSubmit}>
           <fieldset>
-            <p className='legend'>Residency Info (required)</p>
-
             <Row>
-              <Form.Group as={Col} md={6} controlId='formGridEmail'>
-                <Form.Label>Post Title</Form.Label>
+              <Form.Group as={Col} md={4}>
                 <Form.Control
                   type='text'
                   name='title'
+                  placeholder='Title of your post'
                   onChange={this.onInputChange}
                 />
               </Form.Group>
 
-              <Form.Group as={Col} md={6} controlId='formGridPassword'>
-                <Form.Label>Category</Form.Label>
+              <Form.Group className='mt-3'>
                 <Form.Control
-                  type='text'
-                  name='category'
+                  as='textarea'
+                  rows={15}
+                  name='narrative'
+                  placeholder='Type your narrative here...'
                   onChange={this.onInputChange}
                 />
               </Form.Group>
             </Row>
-
-            <Form.Group controlId='formGridAddress1'>
-              <Form.Label>Does your post involve an address?</Form.Label>
-              <Form.Control
-                type='checkbox'
-                name='has_address'
-                onChange={this.onInputChange}
-              />
-            </Form.Group>
-
-            <Row>
-              <Form.Group as={Col} md={6} controlId='formGridAddress1'>
-                <Form.Label>Address</Form.Label>
-                <Form.Control
-                  type='text'
-                  name='address'
-                  placeholder='123 N Main St'
-                  onChange={this.onInputChange}
-                />
-              </Form.Group>
-            </Row>
-
-            <Row>
-              <Form.Group as={Col} md={4} controlId='formGridCity'>
-                <Form.Label>City</Form.Label>
-                <Form.Control defaultValue='Granger' disabled />
-              </Form.Group>
-
-              <Form.Group as={Col} md={4} controlId='formGridState'>
-                <Form.Label>State</Form.Label>
-                <Form.Control defaultValue='Indiana' disabled />
-              </Form.Group>
-
-              <Form.Group as={Col} md={4} controlId='formGridZip'>
-                <Form.Label>Zip</Form.Label>
-                <Form.Control defaultValue='46530' disabled />
-              </Form.Group>
-            </Row>
-
-            <Form.Group controlId='formGridZip'>
-              <Form.Label>Date</Form.Label>
-              <Form.Control
-                type='date'
-                name='cal_date'
-                onChange={this.onInputChange}
-              />
-            </Form.Group>
-
-            <Form.Group controlId='formGridZip'>
-              <Form.Label>Narrative</Form.Label>
-              <Form.Control
-                type='textarea'
-                name='narrative'
-                onChange={this.onInputChange}
-              />
-            </Form.Group>
           </fieldset>
 
           <Button variant='warning' type='submit' className='me-2'>
@@ -157,9 +123,18 @@ export default class CreateNews extends Component<
           </Button>
 
           <Button variant='secondary' type='submit'>
-            Discard Post
+            <Link to='/neighborhood-news' className='text-decoration-none'>
+              Discard Post
+            </Link>
           </Button>
         </Form>
+        <ConfirmMessage
+          show={this.state.show}
+          handleClose={this.handleClose}
+          modalMessage={this.state.modalMessage}
+          redirectPage={this.redirectPage}
+          generalMessage={this.state.generalMessage}
+        />
       </div>
     );
   }

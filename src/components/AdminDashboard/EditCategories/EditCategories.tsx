@@ -40,21 +40,21 @@ export default class EditCategories extends Component<
     return (
       <>
         <h1>Edit Categories</h1>
-        <Button className='mb-5'>
+        <Button variant='secondary' className='mb-5'>
           <Link to='/dashboard' className='text-decoration-none'>
             Return to Dashboard
           </Link>
         </Button>
 
         <Row>
-          <Col md={6}>
+          <Col lg={6}>
             <CreateCategories
               sessionToken={this.props.sessionToken}
               fetchCategories={this.fetchCategories}
             />
           </Col>
 
-          <Col md={6}>
+          <Col lg={6}>
             <DisplayCategories
               sessionToken={this.props.sessionToken}
               data={this.state.data}
