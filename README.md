@@ -17,7 +17,6 @@ The student was given 25 business days to build the application. The application
 - Data persistence using PostgreSQL and a NodeJS ORM library (Sequelize)
 - Use DB associations
 - Minimum of two (2) application components use full CRUD
-- MVP components
 - User registration and authenication (REST-ful API)
 - Role based access control
 - Strong typing with Typescript
@@ -33,7 +32,7 @@ For the neighborhood, the application gives them a portal to submit HOA violatio
 
 For HOA management, the application gives them a tool to better manage violations. The app gives them a dashboard to: (1) screen reported violations before publishing; (2) access to subscriber information; (3) three tiers for role permissions; (4) CRUD categories for violations; and (5) monitor status of violations.
 
-## Version 1.0
+## Version 1.0 - CLIENT SIDE
 
 The current version of the application, which has been presented for graduation, offers the following features:
 
