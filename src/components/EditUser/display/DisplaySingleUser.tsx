@@ -372,8 +372,9 @@ export default class DisplaySingleUser extends Component<
                     type='text'
                     name='username'
                     value={this.state.username}
-                    required
-                    onChange={this.onInputChange}
+                    disabled
+                    // required
+                    // onChange={this.onInputChange}
                   />
                 </Form.Group>
 
