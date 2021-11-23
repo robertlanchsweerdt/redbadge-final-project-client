@@ -62,13 +62,14 @@ export default class DisplayNews extends Component<
     const url: string = `${APIURL}/news/${this.state.targetedDeleteUserId}`;
 
     await changeData(url, 'DELETE', reqBody, this.props.sessionToken);
+    this.props.fetchNews();
   };
 
-  componentDidUpdate(prevProps: DisplayNewsProps, prevState: DisplayNewsState) {
-    if (prevState.deleteUser !== this.state.deleteUser) {
-      this.props.fetchNews();
-    }
-  }
+  // componentDidUpdate(prevProps: DisplayNewsProps, prevState: DisplayNewsState) {
+  //   if (prevState.deleteUser !== this.state.deleteUser) {
+  //     this.props.fetchNews();
+  //   }
+  // }
 
   render() {
     return (
