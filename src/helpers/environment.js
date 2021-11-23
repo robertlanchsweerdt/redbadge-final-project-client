@@ -7,7 +7,7 @@ switch (window.location.hostname) {
     APIURL = 'http://localhost:4000';
     break;
   case 'bedrockhillshoa-server.herokuapp.com':
-    APIURL = 'https://bedrockhillshoa-server.herokuapp.com/';
+    APIURL = 'https://bedrockhillshoa-server.herokuapp.com';
 }
 
 export default APIURL;
