@@ -53,7 +53,7 @@ export default class DisplayNews extends Component<
   };
 
   confirmDeleteUser = () => {
-    this.setState({ show: false, deleteUser: true });
+    this.setState({ show: false });
     this.deleteNewsPost();
   };
 
@@ -63,7 +63,16 @@ export default class DisplayNews extends Component<
 
     await changeData(url, 'DELETE', reqBody, this.props.sessionToken);
     this.props.fetchNews();
+
+    this.setState({ deleteUser: true });
   };
+
+  // during re-factoring, work on amending componentDidUpdate so confirmation message displays
+  componentDidUpdate(prevProps: DisplayNewsProps, prevState: DisplayNewsState) {
+    if (prevState.deleteUser !== this.state.deleteUser) {
+      this.setState({ deleteUser: false });
+    }
+  }
 
   render() {
     return (

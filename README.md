@@ -46,7 +46,7 @@ The current version of the application, which has been presented for graduation,
 
 ## Version 2.0 Goal
 
-Version 2.0 has an unspecified complete date.
+Version 2.0 has an unspecified date for completion.
 
 - User can create, update or delete their own entry
 - Add CRUD for HOA Violations
@@ -56,7 +56,7 @@ Version 2.0 has an unspecified complete date.
 
 ## Version 3.0 Goal
 
-Version 3.0 has an unspecified complete date.
+Version 3.0 has an unspecified date for completion.
 
 - Street address validation / auto complete
 - Map to display each address in database
@@ -66,6 +66,6 @@ Version 3.0 has an unspecified complete date.
 
 ## Version 4.0 Goal
 
-Version 4.0 has an unspecified complete date.
+Version 4.0 has an unspecified date for completion.
 
 Scale the app to be used by a multitude of neighborhoods where a user registers for a particular neighborhood / city / state and is granted access by the admin.
