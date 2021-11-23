@@ -4,6 +4,7 @@ import { Button } from 'react-bootstrap';
 import { Plus } from 'react-bootstrap-icons';
 import { fetchData } from '../../utils/fetch';
 import DisplayNews from './DisplayNews/DisplayNews';
+import APIURL from '../../helpers/environment';
 
 interface NewsProps {
   sessionToken: string;
@@ -48,7 +49,7 @@ export default class News extends Component<NewsProps, NewsState> {
     });
   }
 
-  url: string = `http://localhost:4000/news`;
+  url: string = `${APIURL}/news`;
 
   fetchNews = async () => {
     await this.setState({

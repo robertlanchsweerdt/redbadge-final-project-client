@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, Card, Form } from 'react-bootstrap';
 import { ILoginResponse } from './InterfaceSignin';
 import './SignIn.css';
+import APIURL from '../../helpers/environment';
 
 interface SignInProps {
   changeNeedRegistration: Function;
@@ -26,7 +27,7 @@ export default class SignIn extends Component<SignInProps, SignInState> {
       password: this.state.password,
     };
 
-    const url: string = 'http://localhost:4000/users/login';
+    const url: string = `${APIURL}/users/login`;
 
     fetch(url, {
       method: 'POST',

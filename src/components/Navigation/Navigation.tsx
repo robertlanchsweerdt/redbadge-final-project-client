@@ -53,7 +53,9 @@ export default class Navigation extends Component<NavigationProps> {
                     className='d-block mx-auto'
                     onClick={() => this.props.clearSession()}
                   >
-                    <Link to='/'>Logout</Link>
+                    <Link to='/' className='text-decoration-none'>
+                      Logout
+                    </Link>
                   </Button>
                 </NavDropdown>
               </Nav>

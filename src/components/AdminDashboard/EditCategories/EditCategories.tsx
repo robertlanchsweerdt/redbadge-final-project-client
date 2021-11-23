@@ -5,6 +5,7 @@ import { Button, Col, Row } from 'react-bootstrap';
 import DisplayCategories from './DisplayCategories/DisplayCategories';
 import CreateCategories from './CreateCategories/CreateCategories';
 import { InterfaceDisplayCategories } from '../EditCategories/DisplayCategories/InterfaceDisplayCategories';
+import APIURL from '../../../helpers/environment';
 
 interface EditCategoriesProps {
   sessionToken: string;
@@ -24,7 +25,7 @@ export default class EditCategories extends Component<
     this.state = { data: [] };
   }
 
-  url: string = `http://localhost:4000/categories`;
+  url: string = `${APIURL}/categories`;
 
   fetchCategories = async () => {
     this.setState({

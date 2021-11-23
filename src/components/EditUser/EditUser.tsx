@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { fetchData } from '../../utils/fetch';
 import DisplaySingleUser from './display/DisplaySingleUser';
 import { InterfaceEditUser } from './InterfaceEditUser/InterfaceEditUser';
+import APIURL from '../../helpers/environment';
 
 interface EditUserProps {
   editUser: string;
@@ -34,7 +35,7 @@ export default class EditUser extends Component<EditUserProps, EditUserState> {
     };
   }
 
-  url: string = `http://localhost:4000/users/${this.props.editUser}`;
+  url: string = `${APIURL}/users/${this.props.editUser}`;
 
   async componentDidMount() {
     this.setState({

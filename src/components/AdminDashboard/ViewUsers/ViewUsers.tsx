@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import { fetchData } from '../../../utils/fetch';
 import DisplayUsers from './DisplayUsers';
+import APIURL from '../../../helpers/environment';
 
 interface ViewUsersProps {
   sessionToken: string;
@@ -56,7 +57,7 @@ export default class ViewUsers extends Component<
   }
 
   fetchUsers = async () => {
-    const url: string = 'http://localhost:4000/users/';
+    const url: string = `${APIURL}/users/`;
 
     await this.setState({
       users: await fetchData(url, 'GET', this.props.sessionToken),

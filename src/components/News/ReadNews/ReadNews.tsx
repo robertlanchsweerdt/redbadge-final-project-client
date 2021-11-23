@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import { InterfaceNews } from '../InterfaceNews';
 import { changeData, fetchData } from '../../../utils/fetch';
+import APIURL from '../../../helpers/environment';
 
 interface ReadNewsProps {
   sessionToken: string;
@@ -33,7 +34,7 @@ export default class ReadNews extends Component<ReadNewsProps, ReadNewsState> {
   }
 
   fetchArticle = async () => {
-    const url: string = `http://localhost:4000/news/${this.props.newsId}`;
+    const url: string = `${APIURL}/news/${this.props.newsId}`;
 
     this.setState({
       data: await fetchData(url, 'GET', this.props.sessionToken),
@@ -43,7 +44,7 @@ export default class ReadNews extends Component<ReadNewsProps, ReadNewsState> {
   updateArticle = async () => {
     const reqBody: Object = { narrative: this.state.data.narrative };
 
-    const url: string = `http://localhost:4000/news/${this.props.newsId}`;
+    const url: string = `${APIURL}/news/${this.props.newsId}`;
 
     await changeData(url, 'PUT', reqBody, this.props.sessionToken);
 

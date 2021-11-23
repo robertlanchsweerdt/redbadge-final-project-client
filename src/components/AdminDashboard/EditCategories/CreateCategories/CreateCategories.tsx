@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, FormControl, InputGroup } from 'react-bootstrap';
 import { changeData } from '../../../../utils/fetch';
 import MsgAlertBox from '../../../../utils/MsgAlertBox';
+import APIURL from '../../../../helpers/environment';
 
 import './CreateCategories.css';
 
@@ -54,7 +55,7 @@ export default class CreateCategories extends Component<
     ) as HTMLFormElement;
 
     const reqBody = { category: this.state.category };
-    const url: string = `http://localhost:4000/categories`;
+    const url: string = `${APIURL}/categories`;
 
     await changeData(url, 'POST', reqBody, this.props.sessionToken);
     console.log('post added to database');

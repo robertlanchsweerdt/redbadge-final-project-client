@@ -4,6 +4,7 @@ import { Button } from 'react-bootstrap';
 import { InterfaceNews } from '../InterfaceNews';
 import { changeData } from '../../../utils/fetch';
 import ConfirmMessage from '../../../utils/ConfirmMessage';
+import APIURL from '../../../helpers/environment';
 
 interface DisplayNewsProps {
   sessionToken: string;
@@ -58,7 +59,7 @@ export default class DisplayNews extends Component<
 
   deleteNewsPost = async () => {
     const reqBody = {};
-    const url: string = `http://localhost:4000/news/${this.state.targetedDeleteUserId}`;
+    const url: string = `${APIURL}/news/${this.state.targetedDeleteUserId}`;
 
     await changeData(url, 'DELETE', reqBody, this.props.sessionToken);
   };

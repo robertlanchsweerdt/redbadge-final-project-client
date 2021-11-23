@@ -3,6 +3,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { changeData } from '../../../utils/fetch';
 import ConfirmMessage from '../../../utils/ConfirmMessage';
+import APIURL from '../../../helpers/environment';
 
 // Props:  sessionToken
 interface CreateNewsProps {
@@ -74,7 +75,7 @@ export default class CreateNews extends Component<
       narrative: this.state.narrative,
     };
 
-    const url: string = 'http://localhost:4000/news';
+    const url: string = `${APIURL}/news`;
 
     changeData(url, 'POST', reqBody, this.props.sessionToken);
     this.confirmUpdateMessage();

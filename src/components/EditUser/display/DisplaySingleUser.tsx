@@ -4,6 +4,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { changeData } from '../../../utils/fetch';
 import { InterfaceEditUser } from '../InterfaceEditUser/InterfaceEditUser';
 import ConfirmMessage from '../../../utils/ConfirmMessage';
+import APIURL from '../../../helpers/environment';
 
 interface DisplaySingleUserProps {
   data: InterfaceEditUser;
@@ -195,7 +196,7 @@ export default class DisplaySingleUser extends Component<
 
     console.log('reqBody removed pw -->', reqBody);
 
-    const url: string = `http://localhost:4000/users/${this.props.data.id}`;
+    const url: string = `${APIURL}/users/${this.props.data.id}`;
 
     fetch(url, {
       method: 'PUT',
@@ -235,7 +236,7 @@ export default class DisplaySingleUser extends Component<
       const reqBody = {};
 
       // set url
-      const url: string = `http://localhost:4000/users/${this.props.data.id}`;
+      const url: string = `${APIURL}/users/${this.props.data.id}`;
 
       // connect with API / HTTP REQUEST DELETE
       changeData(url, 'DELETE', reqBody, this.props.sessionToken);

@@ -3,6 +3,7 @@ import { Button, Table } from 'react-bootstrap';
 import { InterfaceDisplayCategories } from './InterfaceDisplayCategories';
 import './DisplayCategories.css';
 import { changeData } from '../../../../utils/fetch';
+import APIURL from '../../../../helpers/environment';
 
 interface EditCategoriesProps {
   sessionToken: string;
@@ -70,7 +71,7 @@ export default class DisplayCategories extends Component<
     };
 
     // set url
-    const url: string = `http://localhost:4000/categories/${category.id}`;
+    const url: string = `${APIURL}/categories/${category.id}`;
     console.log('DELETE URL -->', url);
 
     // connect with API / HTTP REQUEST DELETE
@@ -86,7 +87,7 @@ export default class DisplayCategories extends Component<
     const reqBody = { category: this.state.categoryName };
 
     // set url
-    const url: string = `http://localhost:4000/categories/${this.state.categoryId}`;
+    const url: string = `${APIURL}/categories/${this.state.categoryId}`;
 
     // connect with API POST
     await changeData(url, 'PUT', reqBody, this.props.sessionToken);

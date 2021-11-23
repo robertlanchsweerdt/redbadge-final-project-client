@@ -6,6 +6,7 @@ import './DisplayUsers.css';
 import ConfirmMessage from '../../../utils/ConfirmMessage';
 import { IDisplayUsers } from './IDisplayUsers';
 import { changeData } from '../../../utils/fetch';
+import APIURL from '../../../helpers/environment';
 
 interface DisplayUsersProps {
   allUsers: Array<{
@@ -92,7 +93,7 @@ export default class DisplayUsers extends Component<
       const reqBody = {};
 
       // set url
-      const url: string = `http://localhost:4000/users/${this.state.targetedUser.id}`;
+      const url: string = `${APIURL}/users/${this.state.targetedUser.id}`;
 
       // connect with API / HTTP REQUEST DELETE
       await changeData(url, 'DELETE', reqBody, this.props.sessionToken);

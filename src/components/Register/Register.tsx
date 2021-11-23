@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, Card, Col, Form, Row } from 'react-bootstrap';
 import { IRegisterResponse } from './InterfaceRegister';
 import './Register.css';
+import APIURL from '../../helpers/environment';
 
 interface RegisterProps {
   changeNeedRegistration: Function;
@@ -83,7 +84,7 @@ export default class Register extends Component<RegisterProps, RegisterState> {
         bio: this.state.bio,
       };
 
-      const url: string = 'http://localhost:4000/users/register';
+      const url: string = `${APIURL}/users/register`;
 
       fetch(url, {
         method: 'POST',
