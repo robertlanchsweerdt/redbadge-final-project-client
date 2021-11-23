@@ -57,8 +57,6 @@ export default class DisplayCategories extends Component<
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     category: InterfaceDisplayCategories
   ) => {
-    console.log('delete button -->', category.category);
-
     this.setState({
       categoryName: category.category,
       categoryId: category.id,
@@ -72,7 +70,6 @@ export default class DisplayCategories extends Component<
 
     // set url
     const url: string = `${APIURL}/categories/${category.id}`;
-    console.log('DELETE URL -->', url);
 
     // connect with API / HTTP REQUEST DELETE
     await changeData(url, 'DELETE', reqBody, this.props.sessionToken);

@@ -31,9 +31,7 @@ export default class Auth extends Component<AuthProps, AuthState> {
     return (
       <div id='wrapper'>
         <h1 className='text-center px-2'>Bedrock Hills</h1>
-        <h3 className='text-center mb-5 px-2'>
-          Home Owners Association Portal
-        </h3>
+        <h3 className='text-center mb-5 px-2'>Homeowners Association Portal</h3>
 
         {this.state.needRegistration ? (
           <Register

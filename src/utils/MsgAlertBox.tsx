@@ -11,7 +11,6 @@ export default function MsgAlertBox(props: MsgAlertBoxProps) {
     <>
       {props.validateIntent && (
         <div id='alertMsgBox'>
-          {console.log(props.validateIntent)}
           <p className='text-black'>{props.msg}</p>
           <Button variant='danger' onClick={() => props.closeMsgBox()}>
             Close

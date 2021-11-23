@@ -180,21 +180,10 @@ export default class DisplaySingleUser extends Component<
       bio: this.state.bio,
     };
 
-    console.log('Before -->', reqBody);
-
     // remove password key from reqBody Object if admin doesn't want to change password
     if (!this.state.updatePassword) {
       delete reqBody['password'];
     }
-
-    console.log('After -->', reqBody);
-
-    // temporary work around if necessary
-    // if (this.state.updatePassword) {
-    //   const { password, ...rest } = reqBody;
-    // }
-
-    console.log('reqBody removed pw -->', reqBody);
 
     const url: string = `${APIURL}/users/${this.props.data.id}`;
 
@@ -221,7 +210,6 @@ export default class DisplaySingleUser extends Component<
 
           usernameField.style.border = 'solid 2px #792020';
         } else {
-          console.log('Update success');
           this.confirmUpdateMessage();
         }
       })

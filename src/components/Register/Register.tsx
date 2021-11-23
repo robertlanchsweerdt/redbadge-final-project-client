@@ -66,7 +66,6 @@ export default class Register extends Component<RegisterProps, RegisterState> {
     e.preventDefault();
 
     if (this.state.password !== this.state.password_confirm) {
-      console.log('Your password does not match');
       this.passwordNotConfirmed();
     } else {
       const reqBody = {

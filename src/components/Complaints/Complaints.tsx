@@ -9,6 +9,7 @@ export default class Complaints extends Component<ComplaintsProps> {
     return (
       <div>
         <h1>Reported HOA Violations</h1>
+        <h2>Coming soon...</h2>
       </div>
     );
   }

@@ -32,7 +32,6 @@ export default class CreateCategories extends Component<
   }
 
   verifyAddIntent = () => {
-    console.log(this.state.category.length);
     if (this.state.category.length < 3) {
       this.setState({
         validateIntent: true,
@@ -48,8 +47,6 @@ export default class CreateCategories extends Component<
   };
 
   addNewCategory = async () => {
-    console.log('add category');
-
     const inputField = document.getElementById(
       'category-field'
     ) as HTMLFormElement;
@@ -58,7 +55,6 @@ export default class CreateCategories extends Component<
     const url: string = `${APIURL}/categories`;
 
     await changeData(url, 'POST', reqBody, this.props.sessionToken);
-    console.log('post added to database');
 
     inputField.value = '';
     this.props.fetchCategories();

@@ -55,8 +55,6 @@ export default class CreateNews extends Component<
 
   // handles the state changes
   onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('change detected');
-    console.log(e.target.name);
     this.setState({ [e.target.name]: e.target.value } as any);
   };
 
@@ -68,8 +66,6 @@ export default class CreateNews extends Component<
     if (this.state.title.length < 1 || this.state.narrative.length < 1) return;
 
     // process POST request if passes circuit breaker
-    console.log('your post submitted');
-
     const reqBody = {
       title: this.state.title,
       narrative: this.state.narrative,
