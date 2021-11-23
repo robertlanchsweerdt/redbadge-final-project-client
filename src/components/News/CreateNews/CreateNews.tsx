@@ -54,6 +54,7 @@ export default class CreateNews extends Component<
   redirectPage = () => this.setState({ redirect: '/neighborhood-news' });
 
   // handles the state changes
+  // onInputChange accepts a multitude of datatypes so had to use 'any'
   onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ [e.target.name]: e.target.value } as any);
   };

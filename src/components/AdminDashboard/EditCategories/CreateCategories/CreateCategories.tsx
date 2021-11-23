@@ -60,6 +60,7 @@ export default class CreateCategories extends Component<
     this.props.fetchCategories();
   };
 
+  // could not find proper Typescript syntax for keypress code
   KeyPress(e: any) {
     if (e.code === 'Enter') {
       this.verifyAddIntent();

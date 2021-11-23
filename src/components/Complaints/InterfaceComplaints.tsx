@@ -7,7 +7,7 @@ export interface InterfaceComplaints {
   state: string;
   zip: number;
   narrative: string;
-  photos?: any;
+  photos?: JSON;
   createdAt?: Date;
   updatedAt?: Date;
   userId?: string;

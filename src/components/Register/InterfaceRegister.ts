@@ -12,7 +12,7 @@
         tele: null | string;
         email: string;
         role: string;
-        bio?: any;
+        bio?: string;
         updatedAt: Date;
         createdAt: Date;
     }

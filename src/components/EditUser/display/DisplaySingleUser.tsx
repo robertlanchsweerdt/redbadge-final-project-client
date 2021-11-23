@@ -90,12 +90,13 @@ export default class DisplaySingleUser extends Component<
   redirectPage = () =>
     this.setState({ redirect: '/registered-users', deleteUser: false });
 
+  // onInputChange accepts multiple datatypes so 'any' was used
   onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const key = e.target.name;
     this.setState({ [key]: e.target.value } as any);
   };
 
-  checkBoxPassword = (e: any) => {
+  checkBoxPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ updatePassword: e.target.checked });
   };
 
@@ -110,7 +111,9 @@ export default class DisplaySingleUser extends Component<
 
   // populate user role dropdown
   populateUserRole() {
-    const defaultOption: any = document.getElementById('defaultRole');
+    const defaultOption = document.getElementById(
+      'defaultRole'
+    ) as HTMLFormElement;
     defaultOption.textContent = this.props.data.role;
   }
 

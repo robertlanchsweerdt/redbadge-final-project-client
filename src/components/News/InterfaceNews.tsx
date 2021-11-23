@@ -2,7 +2,7 @@ export interface InterfaceNews {
   id: number;
   title: string;
   narrative: string;
-  cal_date?: any;
+  cal_date?: Date;
   photos?: Object;
   author: string;
   createdAt: Date;
