@@ -6,8 +6,8 @@ switch (window.location.hostname) {
     // this is the localhost naem of the API
     APIURL = 'http://localhost:4000';
     break;
-  case 'bedrockhillshoa-server.herokuapp.com':
-    APIURL = 'https://bedrockhillshoa-server.herokuapp.com';
+  case 'bedrockhillshoa.herokuapp.com': // client
+    APIURL = 'https://bedrockhillshoa-server.herokuapp.com'; // server
 }
 
 export default APIURL;
