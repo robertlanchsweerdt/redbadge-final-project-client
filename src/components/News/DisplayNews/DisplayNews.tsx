@@ -65,12 +65,6 @@ export default class DisplayNews extends Component<
     this.props.fetchNews();
   };
 
-  // componentDidUpdate(prevProps: DisplayNewsProps, prevState: DisplayNewsState) {
-  //   if (prevState.deleteUser !== this.state.deleteUser) {
-  //     this.props.fetchNews();
-  //   }
-  // }
-
   render() {
     return (
       <>
