@@ -5,6 +5,7 @@ switch (window.location.hostname) {
   case 'localhost' || '127.0.0.1':
     // this is the localhost naem of the API
     APIURL = 'http://localhost:4000';
+    // APIURL = 'https://bedrockhillshoa-server.herokuapp.com'; // server
     break;
   case 'bedrockhillshoa.herokuapp.com': // client
     APIURL = 'https://bedrockhillshoa-server.herokuapp.com'; // server
